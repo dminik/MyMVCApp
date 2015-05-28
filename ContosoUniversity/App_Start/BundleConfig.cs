@@ -14,6 +14,9 @@ namespace ContosoUniversity
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 
+			bundles.Add(new ScriptBundle("~/bundles/dragdropList").Include(
+						"~/Scripts/dragdropList.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
@@ -24,6 +27,7 @@ namespace ContosoUniversity
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+			bundles.Add(new StyleBundle("~/Content/dragdropList").Include("~/Content/dragdropList.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
@@ -37,6 +41,7 @@ namespace ContosoUniversity
                         "~/Content/themes/base/jquery.ui.tabs.css",
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
+						"~/Content/themes/base/jquery.ui.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
         }
     }
