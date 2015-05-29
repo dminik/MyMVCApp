@@ -1,10 +1,35 @@
-﻿@model IEnumerable<ContosoUniversity.Models.Course>
+﻿@using ContosoUniversity.Models
+@model IEnumerable<ContosoUniversity.Models.Course>
 
 @{
     ViewBag.Title = "Courses";
+    var bookList = ViewData["Books"] as IEnumerable<Book>;
 }
 
 <h2>Courses</h2>
+
+<div class="ui-widget ui-helper-clearfix">
+
+    <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix ui-droppable">
+
+        @foreach (var currentBook in bookList)
+        {
+            <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
+                <h5 class="ui-widget-header">@currentBook.Name</h5>
+                <img src="~/Images/high_tatras_min.jpg" alt="@currentBook.Name" width="96" height="72">
+                <h6 class="ui-widget-header">@currentBook.Price руб.</h6>
+                <h6 class="ui-widget-header">@currentBook.Amount шт.</h6>
+                <a href="http://jqueryui.com/resources/demos/droppable/images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>                
+            </li>
+        }
+        
+    </ul>
+
+    <div id="trash" class="ui-widget-content ui-state-default ui-droppable">
+        <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash">Trash</span> Trash</h4>
+    </div>
+
+</div>
 
 <p>
     @Html.ActionLink("Create New", "Create")

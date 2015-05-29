@@ -1,4 +1,4 @@
-﻿using ContosoUniversity.Migrations;
+﻿// using ContosoUniversity.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
@@ -35,9 +35,9 @@ namespace ContosoUniversity.Controllers
        // Click the DbgSeed link to debug the Seed method
         public ActionResult Contact()
         {
-            var configuration = new Configuration();
-            var migrator = new DbMigrator(configuration);
-            migrator.Update();
+			//var configuration = new Configuration();
+			//var migrator = new DbMigrator(configuration);
+			//migrator.Update();
 
             ViewBag.Message = "Your contact page.";
 

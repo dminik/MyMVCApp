@@ -8,6 +8,7 @@ namespace ContosoUniversity.DAL
         private SchoolContext context = new SchoolContext();
         private GenericRepository<Department> departmentRepository;
         private CourseRepository courseRepository;
+		private BookRepository bookRepository;
 
         public GenericRepository<Department> DepartmentRepository
         {
@@ -34,6 +35,19 @@ namespace ContosoUniversity.DAL
                 return courseRepository;
             }
         }
+
+		public BookRepository BookRepository
+		{
+			get
+			{
+
+				if (this.bookRepository == null)
+				{
+					this.bookRepository = new BookRepository(context);
+				}
+				return bookRepository;
+			}
+		}
 
 
         public void Save()

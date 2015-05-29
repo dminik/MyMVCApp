@@ -38,35 +38,7 @@
                 </div>
             </div>
         </header>
-    <div id="body">
-
-
-        <div class="ui-widget ui-helper-clearfix">
-
-            <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix ui-droppable">
-                <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-                    <h5 class="ui-widget-header">High Tatras</h5>
-                    <img src="~/Images/high_tatras_min.jpg" alt="The peaks of High Tatras" width="96" height="72">
-                    <a href="http://jqueryui.com/resources/demos/droppable/images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-                    <a href="http://jqueryui.com/resources/demos/droppable/link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
-                </li>
-                <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-                    <h5 class="ui-widget-header">High Tatras 2</h5>
-                    <img src="~/Images/high_tatras2_min.jpg" alt="The chalet at the Green mountain lake" width="96" height="72">
-                    <a href="http://jqueryui.com/resources/demos/droppable/images/high_tatras2.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-                    <a href="http://jqueryui.com/resources/demos/droppable/link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
-                </li>
-
-            </ul>
-
-            <div id="trash" class="ui-widget-content ui-state-default ui-droppable">
-                <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash">Trash</span> Trash</h4>
-            </div>
-
-        </div>
-
-
-
+    <div id="body">        
         @RenderSection("featured", required: false)
         <section class="content-wrapper main-content clear-fix">
             @RenderBody()

@@ -66,3 +66,6 @@ packages/
 *.tif
 
 \obj*
+*\App_Data\*
+ContosoUniversity/App_Data/CU10_log.ldf
+ContosoUniversity/App_Data/CU10.mdf
