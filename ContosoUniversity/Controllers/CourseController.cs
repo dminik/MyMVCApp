@@ -38,10 +38,7 @@ namespace ContosoUniversity.Controllers
 		        filter: d => !SelectedDepartment.HasValue || d.DepartmentID == departmentID,
 		        orderBy: q => q.OrderBy(d => d.CourseID),
 		        includeProperties: "Department");
-
-
-			ViewData["Books"] = unitOfWork.BookRepository.Get().ToList();
-
+			
 			return View(depsList);
         }
 

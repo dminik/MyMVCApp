@@ -5,18 +5,13 @@ namespace ContosoUniversity.Models
 {
    public class Book
    {
-      [Key]      
-      public int Id  { get; set; }
-
-      [StringLength(50)]
-      [Display(Name = "Имя")]
-      public string Name { get; set; }
-	  
-	  [Display(Name = "Цена")]
+	  [Key]      
+	  public int Id  { get; set; }
+	 
+	  public string Name { get; set; }
+	  	
 	  public decimal Price { get; set; }
-
-	  [Display(Name = "Количество")]
+	 
 	  public int Amount { get; set; }
-
    }
 }

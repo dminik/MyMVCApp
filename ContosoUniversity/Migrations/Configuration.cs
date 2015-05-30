@@ -15,19 +15,34 @@ namespace ContosoUniversity.Migrations
 		{
 			var books = new List<Book>
 			{
-				new Book { Name = "Буратино", Amount = 5, Price = 1000, },
-				new Book { Name = "Война и мир", Amount = 2, Price = 500,  },				
+				new Book { Name = "Буратино", Amount = 5, Price = 1000, Id = 0, },
+				new Book { Name = "Война и мир", Amount = 2, Price = 500, Id = 1, },				
 			};
 
 
 			books.ForEach(s => context.Books.AddOrUpdate(p => p.Id, s));
-			context.SaveChanges();
 
+			context.SaveChanges();
+		}
+
+		void SeedOrders(SchoolContext context)
+		{
+			var books = new List<Order>
+			{
+				new Order { PromoCode = "q1", Status = OrderStatus.BuildingByUser, 
+					OrderDetails = new List<OrderDetail>(){new OrderDetail(){BookId = 0, }}},
+				new Order { PromoCode = "q2", Status = OrderStatus.BuildingByUser, },				
+			};
+
+			books.ForEach(s => context.Orders.AddOrUpdate(p => p.Id, s));
+
+			context.SaveChanges();
 		}
 
 		protected override void Seed(SchoolContext context)
 		{
 			SeedBooks(context);
+			SeedOrders(context);
 
 			var students = new List<Student>
 			{
