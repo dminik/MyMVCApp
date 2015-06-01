@@ -5,7 +5,7 @@ namespace DataLayer.Repository
 
 	public interface IDataRepositories : IUnitOfWork
 	{
-		BookRepository Books { get; }
+		IBookRepository Books { get; set; }
 
 		OrderRepository Orders { get; }
 

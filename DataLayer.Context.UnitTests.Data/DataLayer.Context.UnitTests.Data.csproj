@@ -102,11 +102,11 @@
   <ItemGroup>
     <ProjectReference Include="..\DataLayer.Context\DataLayer.Context.csproj">
       <Project>{57974FC9-6EE7-4DF8-939A-62F84C9DA13D}</Project>
-      <Name>Cliffhanger.Shop.DataLayer.Context</Name>
+      <Name>DataLayer.Context</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataLayer.Model\DataLayer.Model.csproj">
       <Project>{91362d3d-e30f-4294-9726-e3bcabe49cf9}</Project>
-      <Name>Cliffhanger.Shop.DataLayer.Model</Name>
+      <Name>DataLayer.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

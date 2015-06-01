@@ -6,7 +6,7 @@
 
 	public class DataRepositories : UnitOfWork, IDataRepositories
 	{
-		private BookRepository mBookRepository;
+		private IBookRepository mBookRepository;
 
 		private OrderDetailRepository mOrderDetailRepository;
 
@@ -18,11 +18,16 @@
 			this.Context = context;
 		}
 
-		public BookRepository Books
+		public IBookRepository Books
 		{
 			get
 			{
 				return this.mBookRepository ?? (this.mBookRepository = new BookRepository(this.Context));
+			}
+
+			set
+			{
+				this.mBookRepository = value;
 			}
 		}
 

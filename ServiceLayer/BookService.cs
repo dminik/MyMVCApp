@@ -10,7 +10,7 @@
 
 	public class BookService : EntityService<BookEntity>, IBookService
 	{
-		private readonly BookRepository _bookRepository;
+		private readonly IBookRepository _bookRepository;
 
 		private IDataRepositories _dataRepositories;
 
