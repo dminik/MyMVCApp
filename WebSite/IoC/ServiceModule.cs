@@ -8,18 +8,16 @@
 
 	public class ServiceModule : Module
 	{
-
 		protected override void Load(ContainerBuilder builder)
 		{
+			builder.RegisterModule(new RepositoryModule());
 
 			builder.RegisterAssemblyTypes(Assembly.Load("ServiceLayer"))
-
 					  .Where(t => t.Name.EndsWith("Service"))
-
 					  .AsImplementedInterfaces()
-
 					  .InstancePerLifetimeScope();
-
+			
+			
 		}
 
 	}

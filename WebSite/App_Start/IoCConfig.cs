@@ -15,10 +15,8 @@
 			var builder = new Autofac.ContainerBuilder();
 
 			builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
-
-			builder.RegisterModule(new RepositoryModule());
-			builder.RegisterModule(new ServiceModule());
-			builder.RegisterModule(new EFModule());
+			
+			builder.RegisterModule(new ServiceModule());		
 
 			var container = builder.Build();
 

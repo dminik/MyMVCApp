@@ -11,7 +11,7 @@
 	public class MainContext : DbContext, IMainContext
 	{
 		public MainContext()
-			: base(string.Format("name={0}", "SchoolContext"))
+			: base(string.Format("name={0}", "MainContext"))
 		{
 		}
 
@@ -41,7 +41,7 @@
 	public class UsersContext : DbContext
 	{
 		public UsersContext()
-			: base("DefaultConnection")
+			: base("MainContext")
 		{
 		}
 

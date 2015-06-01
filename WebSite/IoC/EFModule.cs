@@ -9,12 +9,8 @@
 	public class EFModule : Module
 	{
 		protected override void Load(ContainerBuilder builder)
-		{
-			builder.RegisterModule(new RepositoryModule());
-
-			builder.RegisterType(typeof(MainContext)).As(typeof(IMainContext)).InstancePerLifetimeScope();
-			builder.RegisterType(typeof(DataRepositories)).As(typeof(IDataRepositories)).InstancePerRequest();         
-
+		{			
+			builder.RegisterType(typeof(MainContext)).As(typeof(IMainContext)).InstancePerLifetimeScope();		
 		}
 
 	}
