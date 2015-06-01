@@ -1,0 +1,37 @@
+﻿@model WebSite.Models.PromoLoginModel
+
+@{
+    ViewBag.Title = "Введите промокод";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+<section id="loginForm">
+
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>        
+        <ol>
+            <li>                
+                @Html.TextBoxFor(m => m.PromoCode)
+                @Html.ValidationMessageFor(m => m.PromoCode)
+            </li>
+           
+           
+        </ol>
+        <input type="submit" value="Ок" />
+    </fieldset>
+    <p>
+        @Html.ActionLink("Получить промокод", "CreatePromoCodeAndEnter") 
+    </p>
+}
+</section>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
