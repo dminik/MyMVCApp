@@ -78,7 +78,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FakeData.cs" />
+    <Compile Include="TestDataProvider.cs" />
     <Compile Include="DataLoader.cs" />
     <Compile Include="Interfaces\IMainContext.cs" />
     <Compile Include="IoC\EFModule.cs" />

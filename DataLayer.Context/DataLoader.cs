@@ -10,7 +10,7 @@
 	{
 		private void SeedBooks(MainContext context)
 		{
-			var books = FakeData.GetBooks();
+			var books = TestDataProvider.GetBooks();
 
 			books.ForEach(s => context.Books.AddOrUpdate(p => p.Id, s));
 

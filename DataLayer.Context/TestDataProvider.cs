@@ -4,7 +4,7 @@
 
 	using DataLayer.Model.Entities;
 
-	public static class FakeData
+	public static class TestDataProvider
 	{
 		public static List<OrderEntity> GetOrders()
 		{
