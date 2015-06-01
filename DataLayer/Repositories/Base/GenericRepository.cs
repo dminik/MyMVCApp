@@ -9,8 +9,8 @@
 	using DataLayer.Context.Interfaces;
 	using DataLayer.Model.Entities;
 
-	public abstract class GenericRepository<T> : IGenericRepository<T>
-		where T : BaseEntity
+	public abstract class GenericRepository<T, TKeyType> : IGenericRepository<T, TKeyType>
+		where T : Entity<TKeyType>
 	{
 		protected readonly IDbSet<T> DbSet;
 
@@ -33,14 +33,25 @@
 			return query;
 		}
 
+		public T GetByKey(TKeyType key)
+		{
+			return this.DbSet.Find(key);			
+		}
+
 		public virtual T Add(T entity)
 		{
 			return this.DbSet.Add(entity);
 		}
 
 		public virtual T Delete(T entity)
-		{
+		{			
 			return this.DbSet.Remove(entity);
+		}
+
+		public virtual void Delete(TKeyType id)
+		{
+			var entityToDelete = this.DbSet.Find(id);
+			Delete(entityToDelete);
 		}
 
 		public virtual void Edit(T entity)

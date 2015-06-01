@@ -8,22 +8,22 @@
 
 	using ServiceLayer.Common;
 
-	public class BookService : EntityService<BookEntity>, IBookService
+	public class BookService : EntityService<BookEntity, int>, IBookService
 	{
-		private readonly IBookRepository _bookRepository;
+		private readonly IBookRepository bookRepository;
 
-		private IDataRepositories _dataRepositories;
+		private IDataRepositories dataRepositories;
 
 		public BookService(IDataRepositories dataRepositories)
 			: base(dataRepositories.Books, dataRepositories)
 		{
-			this._bookRepository = dataRepositories.Books;
-			this._dataRepositories = dataRepositories;
+			this.bookRepository = dataRepositories.Books;
+			this.dataRepositories = dataRepositories;
 		}
 
-		public BookEntity GetById(int id)
-		{
-			return this._bookRepository.FindBy(x => x.Id == id).FirstOrDefault();
-		}
+		//public BookEntity GetById(int id)
+		//{
+		//	return this._bookRepository.FindBy(x => x.Id == id).FirstOrDefault();
+		//}
 	}
 }

@@ -3,7 +3,7 @@
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository.Repositories.Base;
 
-	public interface IOrderRepository : IGenericRepository<OrderEntity>
+	public interface IOrderRepository : IGenericRepository<OrderEntity, int>
 	{
 	}
 }

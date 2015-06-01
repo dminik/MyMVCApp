@@ -6,16 +6,20 @@
 
 	using DataLayer.Model.Entities;
 
-	public interface IGenericRepository<T> : IDisposable
-		where T : BaseEntity
+	public interface IGenericRepository<T, TKeyType> : IDisposable
+		where T : Entity<TKeyType>
 	{
 		IEnumerable<T> GetAll();
 
 		IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
 
+		T GetByKey(TKeyType key);
+
 		T Add(T entity);
 
 		T Delete(T entity);
+
+		void Delete(TKeyType id);
 
 		void Edit(T entity);
 

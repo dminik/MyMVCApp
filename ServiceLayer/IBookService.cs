@@ -4,8 +4,8 @@
 
 	using ServiceLayer.Common;
 
-	public interface IBookService : IEntityService<BookEntity>
+	public interface IBookService : IEntityService<BookEntity, int>
 	{
-		BookEntity GetById(int id);
+		
 	}
 }

@@ -4,7 +4,7 @@
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository.Repositories.Base;
 
-	public class OrderRepository : GenericRepository<OrderEntity>, IOrderRepository
+	public class OrderRepository : GenericRepository<OrderEntity, int>, IOrderRepository
 	{
 		public OrderRepository(IMainContext context)
 			: base(context)

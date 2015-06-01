@@ -5,6 +5,7 @@ using System.Text;
 namespace ServiceLayer.UnitTests
 {
 	using System.Linq;
+	using System.Linq.Expressions;
 
 	using DataLayer.Context;
 	using DataLayer.Context.Interfaces;
@@ -37,6 +38,15 @@ namespace ServiceLayer.UnitTests
 			this.service = new BookService(dataRepositories.Object);
 		}
 
+		[Test]
+		public void GetById_Success()
+		{
+			// Act			
+			this.service.GetById(1);
+
+			// Assert
+			this.mockBookRepository.Verify(x => x.GetByKey(It.IsAny<int>()), Times.Once);					
+		}
 
 		[Test]
 		public void GetAll_Success()
@@ -61,6 +71,50 @@ namespace ServiceLayer.UnitTests
 
 			// Assert
 			this.mockBookRepository.Verify(x => x.Add(It.IsAny<BookEntity>()), Times.Once);
+			this.dataRepositories.Verify(x => x.Save(), Times.Once);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Create_InvalidParams_ThrowException()
+		{
+			// Act			
+			this.service.Create(null);
+		}
+
+		[Test]
+		public void Update_Success()
+		{
+			// Arrange						
+			var item = TestDataProvider.GetBooks()[0];
+
+			// Act			
+			this.service.Update(item);
+
+			// Assert
+			this.mockBookRepository.Verify(x => x.Edit(It.IsAny<BookEntity>()), Times.Once);
+			this.dataRepositories.Verify(x => x.Save(), Times.Once);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Update_InvalidParams_ThrowException()
+		{			
+			// Act			
+			this.service.Update(null);
+		}
+
+		[Test]
+		public void Delete_Success()
+		{
+			// Arrange						
+			var item = TestDataProvider.GetBooks()[0];
+
+			// Act			
+			this.service.Delete(item.Id);
+
+			// Assert
+			this.mockBookRepository.Verify(x => x.Delete(It.IsAny<int>()), Times.Once);
 			this.dataRepositories.Verify(x => x.Save(), Times.Once);
 		}
 	}

@@ -5,15 +5,17 @@
 
 	using DataLayer.Model.Entities;
 
-	public interface IEntityService<T> : IService, IDisposable
-		where T : BaseEntity
+	public interface IEntityService<T, TKeyType> : IService, IDisposable
+		where T : Entity<TKeyType>
 	{
-		void Create(T entity);
+		void Create(T entity);		
 
-		void Delete(T entity);
+		void Delete(TKeyType id);
 
 		IEnumerable<T> GetAll();
 
 		void Update(T entity);
+
+		T GetById(TKeyType id);
 	}
 }

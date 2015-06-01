@@ -7,7 +7,7 @@
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository.Repositories.Base;
 
-	public class BookRepository : GenericRepository<BookEntity>, IBookRepository
+	public class BookRepository : GenericRepository<BookEntity, int>, IBookRepository
 	{
 		public BookRepository(IMainContext context)
 			: base(context)
