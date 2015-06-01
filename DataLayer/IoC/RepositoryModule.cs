@@ -1,9 +1,10 @@
-﻿namespace WebSite.IoC
+﻿namespace DataLayer.Repository.IoC
 {
 	using System.Reflection;
 
 	using Autofac;
 
+	using DataLayer.Context.IoC;
 	using DataLayer.Repository;
 
 	using Module = Autofac.Module;

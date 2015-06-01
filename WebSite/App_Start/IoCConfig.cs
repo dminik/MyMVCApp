@@ -1,11 +1,10 @@
 ﻿namespace WebSite
 {
 	using System.Web.Mvc;
-
 	using Autofac;
 	using Autofac.Integration.Mvc;
+	using ServiceLayer.IoC;
 
-	using WebSite.IoC;
 
 	public class IoCConfig
 	{

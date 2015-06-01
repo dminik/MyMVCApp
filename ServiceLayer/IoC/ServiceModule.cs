@@ -1,12 +1,11 @@
-﻿namespace WebSite.IoC
+﻿namespace ServiceLayer.IoC
 {
 	using System.Reflection;
-
 	using Autofac;
+	using DataLayer.Repository.IoC;
 
-	using Module = Autofac.Module;
 
-	public class ServiceModule : Module
+	public class ServiceModule : Autofac.Module
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
@@ -15,10 +14,7 @@
 			builder.RegisterAssemblyTypes(Assembly.Load("ServiceLayer"))
 					  .Where(t => t.Name.EndsWith("Service"))
 					  .AsImplementedInterfaces()
-					  .InstancePerLifetimeScope();
-			
-			
+					  .InstancePerLifetimeScope();						
 		}
-
 	}
 }
