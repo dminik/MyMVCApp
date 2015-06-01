@@ -5,10 +5,8 @@
 	using ServiceLayer;
 
 	public abstract class BaseController : Controller
-	{		
+	{
 		protected IBookService BookService;
-
-		
 
 		protected override void Dispose(bool disposing)
 		{

@@ -14,7 +14,7 @@
 	{
 		[AllowAnonymous]
 		public ActionResult Login()
-		{			
+		{
 			return this.View();
 		}
 
@@ -23,15 +23,12 @@
 		[ValidateAntiForgeryToken]
 		public ActionResult Login(PromoLoginModel model)
 		{
-			if (this.ModelState.IsValid && WebSecurity.Login(model.PromoCode, model.PromoCode, persistCookie: true))
+			if (this.ModelState.IsValid && WebSecurity.Login(model.PromoCode, model.PromoCode, true))
 			{
-				return this.RedirectToAction("Index", "Order");				
+				return this.RedirectToAction("Index", "Order");
 			}
-			else
-			{
-				this.ModelState.AddModelError("", "Неправильный промокод.");
-				return this.View(model);
-			}
+			this.ModelState.AddModelError("", "Неправильный промокод.");
+			return this.View(model);
 		}
 
 		[HttpPost]
@@ -49,7 +46,7 @@
 			var newPromoCode = Guid.NewGuid().ToString();
 
 			WebSecurity.CreateUserAndAccount(newPromoCode, newPromoCode);
-			return this.Login(new PromoLoginModel() { PromoCode = newPromoCode, });					
+			return this.Login(new PromoLoginModel { PromoCode = newPromoCode });
 		}
 	}
 }

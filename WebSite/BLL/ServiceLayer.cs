@@ -2,12 +2,11 @@
 {
 	using System;
 
-	static public class ServiceLayer
+	public static class ServiceLayer
 	{
-		static public string GetNewPromoCode()
+		public static string GetNewPromoCode()
 		{
 			return Guid.NewGuid().ToString();
 		}
-
 	}
 }

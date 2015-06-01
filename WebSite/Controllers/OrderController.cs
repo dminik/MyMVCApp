@@ -15,14 +15,14 @@
 
 		public ActionResult Index()
 		{
-			var modelBookList = this.BookService.GetAll().ToList();				
-						
+			var modelBookList = this.BookService.GetAll().ToList();
+
 			return this.View(modelBookList);
 		}
-		
+
 		[HttpPost]
 		public ActionResult AddToOrder(string promoCode, int bookId)
-		{			
+		{
 			//var order = unitOfWork.OrderRepository.Get(x => x.PromoCode == promoCode).FirstOrDefault();
 
 			//if (order == null)
@@ -45,6 +45,5 @@
 
 			return this.Json(true);
 		}
-		
 	}
 }

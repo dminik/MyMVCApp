@@ -10,25 +10,26 @@
 
 <section id="loginForm">
 
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+    @using (Html.BeginForm(new { ViewBag.ReturnUrl }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
 
-    <fieldset>        
-        <ol>
-            <li>                
-                @Html.TextBoxFor(m => m.PromoCode)
-                @Html.ValidationMessageFor(m => m.PromoCode)
-            </li>
-           
-           
-        </ol>
-        <input type="submit" value="Ок" />
-    </fieldset>
-    <p>
-        @Html.ActionLink("Получить промокод", "CreatePromoCodeAndEnter") 
-    </p>
-}
+        <fieldset>
+            <ol>
+                <li>
+                    @Html.TextBoxFor(m => m.PromoCode)
+                    @Html.ValidationMessageFor(m => m.PromoCode)
+                </li>
+
+
+            </ol>
+            <input type="submit" value="Ок"/>
+        </fieldset>
+        <p>
+            @Html.ActionLink("Получить промокод", "CreatePromoCodeAndEnter")
+        </p>
+    }
 </section>
 
 

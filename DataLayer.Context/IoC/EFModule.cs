@@ -1,15 +1,19 @@
 ﻿namespace DataLayer.Context.IoC
 {
+	using System.Data.Entity;
+
 	using Autofac;
 
-	using DataLayer.Context;
 	using DataLayer.Context.Interfaces;
 
-	public class EFModule : Autofac.Module
+	using SchoolContextSeedInitializer = DataLayer.Context.Migrations.MainContextSeedInitializer;
+
+	public class EFModule : Module
 	{
 		protected override void Load(ContainerBuilder builder)
-		{			
-			builder.RegisterType(typeof(MainContext)).As(typeof(IMainContext)).InstancePerLifetimeScope();		
+		{
+			Database.SetInitializer(new SchoolContextSeedInitializer());
+			builder.RegisterType(typeof(MainContext)).As(typeof(IMainContext)).InstancePerLifetimeScope();
 		}
 	}
 }
