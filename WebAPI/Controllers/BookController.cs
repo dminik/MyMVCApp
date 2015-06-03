@@ -1,4 +1,4 @@
-﻿namespace xxx.Controllers
+﻿namespace WebAPI.Controllers
 {
 	using System.Collections.Generic;
 	using System.Web.Http;

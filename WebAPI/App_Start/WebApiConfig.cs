@@ -1,7 +1,7 @@
-﻿using System.Web.Http;
-
-namespace ASP.NET_MVC5_Bootstrap3_3_1_LESS
+﻿namespace WebAPI
 {
+	using System.Web.Http;
+
 	public static class WebApiConfig
 	{
 		public static void Register(HttpConfiguration config)

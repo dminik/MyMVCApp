@@ -1,7 +1,7 @@
-﻿using System.Web.Mvc;
-
-namespace ASP.NET_MVC5_Bootstrap3_3_1_LESS
+﻿namespace WebAPI
 {
+	using System.Web.Mvc;
+
 	public class FilterConfig
 	{
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)

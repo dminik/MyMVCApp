@@ -1,9 +1,9 @@
-﻿namespace xxx
+﻿namespace WebAPI
 {
 	using System.Reflection;
 	using System.Web.Http;
-	
-	using Autofac;	
+
+	using Autofac;
 	using Autofac.Integration.WebApi;
 
 	using ServiceLayer.IoC;
@@ -14,9 +14,8 @@
 		{			
 			var builder = new ContainerBuilder();
 
-			//builder.RegisterModule(new ServiceModule());
-
-			// Register individual components
+			builder.RegisterModule(new ServiceModule());
+			
 			builder.RegisterInstance(new SomeRepo()).As<ISomeRepo>();
 
 			builder.RegisterApiControllers(Assembly.GetExecutingAssembly());

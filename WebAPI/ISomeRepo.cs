@@ -1,4 +1,4 @@
-﻿namespace xxx
+﻿namespace WebAPI
 {
 	public interface ISomeRepo
 	{
