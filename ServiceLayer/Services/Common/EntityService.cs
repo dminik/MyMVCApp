@@ -7,6 +7,8 @@
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository.Repositories.Base;
 
+	using ServiceLayer.Cache;
+
 	public abstract class EntityService<T, TKeyType> : IEntityService<T, TKeyType>
 		where T : Entity<TKeyType>
 	{
@@ -14,10 +16,11 @@
 
 		protected readonly IUnitOfWork UnitOfWork;
 
+		
 		protected EntityService(IGenericRepository<T, TKeyType> repository, IUnitOfWork unitOfWork)
 		{
 			this.UnitOfWork = unitOfWork;
-			this.Repository = repository;
+			this.Repository = repository;			
 		}
 
 		public virtual void Create(T entity)
@@ -26,6 +29,7 @@
 			{
 				throw new ArgumentNullException("entity");
 			}
+			
 			this.Repository.Add(entity);
 			this.UnitOfWork.Save();
 		}

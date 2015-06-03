@@ -47,13 +47,18 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\EntityService.cs" />
-    <Compile Include="Common\IEntityService.cs" />
-    <Compile Include="Common\IService.cs" />
-    <Compile Include="BookService.cs" />
-    <Compile Include="IBookService.cs" />
+    <Compile Include="Cache\CacheServiceInMemory.cs" />
+    <Compile Include="Cache\CacheServiceDistributed.cs" />
+    <Compile Include="Cache\ICacheService.cs" />
+    <Compile Include="Services\Common\CachedEntityService.cs" />
+    <Compile Include="Services\Common\EntityService.cs" />
+    <Compile Include="Services\Common\IEntityService.cs" />
+    <Compile Include="Services\Common\IService.cs" />
+    <Compile Include="Services\BookService.cs" />
+    <Compile Include="Services\IBookService.cs" />
     <Compile Include="Initializer.cs" />
     <Compile Include="IoC\ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
