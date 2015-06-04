@@ -14,7 +14,8 @@
 	{
 		protected readonly ICacheService CacheService;
 
-		protected readonly string KeyPrefix = typeof(T).Name;
+		protected readonly string ObjectKeyPrefix = typeof(T).Name + "_";
+		protected readonly string FlagKeyPrefix = string.Format("flag_{0}_", typeof(T).Name);
 
 		protected CachedEntityService(ICacheService cacheService, IGenericRepository<T, TKeyType> repository, IUnitOfWork unitOfWork)
 			: base(repository, unitOfWork)
@@ -30,7 +31,7 @@
 			}
 			
 			base.Create(entity);
-			CacheService.AddOrUpdate(entity.Id.ToString(), entity, KeyPrefix);
+			CacheService.AddOrUpdate(entity.Id.ToString(), entity, this.ObjectKeyPrefix);
 		}
 
 		public override void Update(T entity)
@@ -41,42 +42,48 @@
 			}
 			
 			base.Update(entity);
-			CacheService.AddOrUpdate(entity.Id.ToString(), entity, KeyPrefix);
+			CacheService.AddOrUpdate(entity.Id.ToString(), entity, this.ObjectKeyPrefix);
 		}
 
 		public override void Delete(TKeyType id)
-		{
-			base.Delete(id);
-
-			CacheService.Remove(id.ToString(), KeyPrefix);
+		{			
+			CacheService.Remove(id.ToString(), this.ObjectKeyPrefix);
 			base.Delete(id);
 		}
 
 		public override IEnumerable<T> GetAll()
 		{			
-			var isGetAllOccuredCacheKey = KeyPrefix + "isGetAllOccuredCacheKey";
-			var isCacheContainAll = CacheService.Get<object>(isGetAllOccuredCacheKey, KeyPrefix) != null;
+			var isGetAllOccuredCacheKey = "IsGetAllOccuredCacheKey";
+			var isCacheContainAll = CacheService.Get<object>(isGetAllOccuredCacheKey, FlagKeyPrefix) != null;
 
 			if (!isCacheContainAll)
 			{
 				var all = this.Repository.GetAll();
 				foreach (var item in all)
 				{
-					CacheService.AddOrUpdate(item.Id.ToString(), item, KeyPrefix);
+					CacheService.AddOrUpdate(item.Id.ToString(), item, this.ObjectKeyPrefix);
 				}
 
-				CacheService.AddOrUpdate(isGetAllOccuredCacheKey, new object(), KeyPrefix);
+				CacheService.AddOrUpdate(isGetAllOccuredCacheKey, new object(), FlagKeyPrefix);
 				return all.ToList();
 			}
 			else
 			{
-				return CacheService.GetByGroupKey<T>(KeyPrefix);
+				return CacheService.GetByGroupKey<T>(this.ObjectKeyPrefix);
 			}
 		}
 
 		public override T GetById(TKeyType id)
 		{
-			return this.Repository.GetByKey(id);
+			var item = CacheService.Get<T>(id.ToString(), ObjectKeyPrefix);
+
+			if (item == null)
+			{
+				item = this.Repository.GetByKey(id);
+				CacheService.AddOrUpdate(id.ToString(), item, this.ObjectKeyPrefix);
+			}
+
+			return item;
 		}		
 	}
 }

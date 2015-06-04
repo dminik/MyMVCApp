@@ -3,9 +3,9 @@
 	using System.ComponentModel.DataAnnotations;
 
 	
-	public abstract class Entity<T> : IEntity<T>
+	public abstract class Entity<TKey> : IEntity<TKey>
 	{
 		[Key]
-		public virtual T Id { get; set; }
+		public virtual TKey Id { get; set; }
 	}
 }

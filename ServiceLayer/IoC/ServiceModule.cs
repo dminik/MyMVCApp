@@ -6,6 +6,8 @@
 
 	using DataLayer.Repository.IoC;
 
+	using ServiceLayer.Cache;
+
 	using Module = Autofac.Module;
 
 	public class ServiceModule : Module
@@ -18,6 +20,8 @@
 				.Where(t => t.Name.EndsWith("Service"))
 				.AsImplementedInterfaces()
 				.InstancePerLifetimeScope();
+
+			builder.RegisterType(typeof(CacheServiceInMemory)).As(typeof(ICacheService)).SingleInstance();
 		}
 	}
 }

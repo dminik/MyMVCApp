@@ -1,25 +1,26 @@
-﻿namespace ServiceLayer
+﻿namespace ServiceLayer.Services
 {
-	using System.Linq;
-
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository;
 	using DataLayer.Repository.Repositories;
 
+	using ServiceLayer.Cache;
 	using ServiceLayer.Common;
 
-	public class BookService : EntityService<BookEntity, int>, IBookService
+	public class BookService : CachedEntityService<BookEntity, int>, IBookService
 	{
 		private readonly IBookRepository bookRepository;
 
 		private IDataRepositories dataRepositories;
 
-		public BookService(IDataRepositories dataRepositories)
-			: base(dataRepositories.Books, dataRepositories)
+		public BookService(ICacheService cacheService, IDataRepositories dataRepositories)
+			: base(cacheService, dataRepositories.Books, dataRepositories)
 		{
 			this.bookRepository = dataRepositories.Books;
 			this.dataRepositories = dataRepositories;
 		}
+
+
 
 		//public BookEntity GetById(int id)
 		//{

@@ -82,7 +82,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookServiceTest.cs" />
+    <Compile Include="CachedEntityServiceTest.cs" />
+    <Compile Include="EntityServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

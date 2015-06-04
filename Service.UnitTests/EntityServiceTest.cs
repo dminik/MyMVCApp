@@ -18,31 +18,44 @@ namespace ServiceLayer.UnitTests
 
 	using NUnit.Framework;
 
-	[TestFixture]
-	class BookServiceTest
-	{
-		private Mock<IBookRepository> mockBookRepository;
-		private IBookService service;
+	using ServiceLayer.Cache;
+	using ServiceLayer.Common;
+	using ServiceLayer.Services;
 
-		Mock<IDataRepositories> dataRepositories;
+	class SomeEntityService<T, TKeyType> : EntityService<T, TKeyType>
+		where T : Entity<TKeyType>		
+	{
+		public SomeEntityService(IGenericRepository<T, TKeyType> repository, IUnitOfWork unitOfWork)
+			: base(repository, unitOfWork)
+		{
+		}
+	}
+
+	[TestFixture]
+	class EntityServiceTest
+	{		
+		Mock<IBookRepository> mockBookRepository;		
+		Mock<IDataRepositories> mockDataRepositories;
+
+		IEntityService<BookEntity, int> serviceUnderTest;
 
 		[SetUp]
 		public void SetUpTest()
-		{			
+		{						
 			mockBookRepository = new Mock<IBookRepository>();			
 			this.mockBookRepository.Setup(x => x.GetAll()).Returns(TestDataProvider.GetBooks());
 
-			dataRepositories = new Mock<IDataRepositories>();
-			this.dataRepositories.Setup(x => x.Books).Returns(this.mockBookRepository.Object);
+			mockDataRepositories = new Mock<IDataRepositories>();
+			this.mockDataRepositories.Setup(x => x.Books).Returns(this.mockBookRepository.Object);
 
-			this.service = new BookService(dataRepositories.Object);
+			this.serviceUnderTest = new SomeEntityService<BookEntity, int>(mockDataRepositories.Object.Books, mockDataRepositories.Object);
 		}
 
 		[Test]
 		public void GetById_Success()
 		{
 			// Act			
-			this.service.GetById(1);
+			this.serviceUnderTest.GetById(1);
 
 			// Assert
 			this.mockBookRepository.Verify(x => x.GetByKey(It.IsAny<int>()), Times.Once);					
@@ -52,7 +65,7 @@ namespace ServiceLayer.UnitTests
 		public void GetAll_Success()
 		{					
 			// Act			
-			var results = this.service.GetAll();
+			var results = this.serviceUnderTest.GetAll();
 
 			// Assert
 			this.mockBookRepository.Verify(x => x.GetAll(), Times.Once);
@@ -67,11 +80,11 @@ namespace ServiceLayer.UnitTests
 			var newItem = TestDataProvider.GetBooks()[0];
 
 			// Act			
-			this.service.Create(newItem);
+			this.serviceUnderTest.Create(newItem);
 
 			// Assert
 			this.mockBookRepository.Verify(x => x.Add(It.IsAny<BookEntity>()), Times.Once);
-			this.dataRepositories.Verify(x => x.Save(), Times.Once);
+			this.mockDataRepositories.Verify(x => x.Save(), Times.Once);
 		}
 
 		[Test]
@@ -79,7 +92,7 @@ namespace ServiceLayer.UnitTests
 		public void Create_InvalidParams_ThrowException()
 		{
 			// Act			
-			this.service.Create(null);
+			this.serviceUnderTest.Create(null);
 		}
 
 		[Test]
@@ -89,11 +102,11 @@ namespace ServiceLayer.UnitTests
 			var item = TestDataProvider.GetBooks()[0];
 
 			// Act			
-			this.service.Update(item);
+			this.serviceUnderTest.Update(item);
 
 			// Assert
 			this.mockBookRepository.Verify(x => x.Edit(It.IsAny<BookEntity>()), Times.Once);
-			this.dataRepositories.Verify(x => x.Save(), Times.Once);
+			this.mockDataRepositories.Verify(x => x.Save(), Times.Once);
 		}
 
 		[Test]
@@ -101,7 +114,7 @@ namespace ServiceLayer.UnitTests
 		public void Update_InvalidParams_ThrowException()
 		{			
 			// Act			
-			this.service.Update(null);
+			this.serviceUnderTest.Update(null);
 		}
 
 		[Test]
@@ -111,11 +124,11 @@ namespace ServiceLayer.UnitTests
 			var item = TestDataProvider.GetBooks()[0];
 
 			// Act			
-			this.service.Delete(item.Id);
+			this.serviceUnderTest.Delete(item.Id);
 
 			// Assert
 			this.mockBookRepository.Verify(x => x.Delete(It.IsAny<int>()), Times.Once);
-			this.dataRepositories.Verify(x => x.Save(), Times.Once);
+			this.mockDataRepositories.Verify(x => x.Save(), Times.Once);
 		}
 	}
 }
