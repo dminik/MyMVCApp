@@ -39,7 +39,7 @@
 
 			var order = this.orderRepository.GetByPromoCode(promoCode);
 			if (order == null)
-				throw new Exception(string.Format("Ошибочный промокод {0}", promoCode));
+				throw new Exception("Ошибочный промокод");
 
 			countOfReservedBooks = GetAmountOrdered(bookId);
 			var book = dataRepositories.Books.GetByKey(bookId);
