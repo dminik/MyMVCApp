@@ -1,21 +1,45 @@
 ﻿namespace WebSite.Controllers
 {
+	using System.Collections.Generic;
 	using System.Linq;
 	using System.Web.Mvc;
 
 	using ServiceLayer;
+	using ServiceLayer.Services;
+
+	using WebSite.ViewModels;
 
 	[Authorize]
 	public class OrderController : BaseController
 	{
-		public OrderController(IBookService bookService)
+		protected IBookService BookService;
+		protected IOrderService OrderService;
+
+		public OrderController(IBookService bookService, IOrderService orderService)
 		{
 			this.BookService = bookService;
+			this.OrderService = orderService;
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			this.OrderService.Dispose();
+			this.BookService.Dispose();
+			base.Dispose(disposing);
 		}
 
 		public ActionResult Index()
 		{
-			var modelBookList = this.BookService.GetAll().ToList();
+			var bookList = this.BookService.GetAll().ToList();
+
+			var modelBookList = new List<Book>();
+			foreach (var bookEntity in bookList)
+			{
+				var bookDTO = new Book(bookEntity);
+				bookDTO.AmountOrdered = OrderService.GetAmountOrdered(bookDTO.Id);
+
+				modelBookList.Add(bookDTO);
+			}
 
 			return this.View(modelBookList);
 		}

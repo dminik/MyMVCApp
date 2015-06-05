@@ -1,7 +1,10 @@
 ﻿namespace DataLayer.Model.Entities
 {
-	public class BookEntity : Entity<int>
-	{
+	using System.Collections.Generic;
+	using System.Linq;
+
+	public class Book : Entity<int>
+	{		
 		public string Name { get; set; }
 
 		public decimal Price { get; set; }

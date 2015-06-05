@@ -1,4 +1,4 @@
-namespace WebSite.Hubs
+namespace WebSite.SignalR
 {
 	public interface ILiveBookCounterHub
 	{

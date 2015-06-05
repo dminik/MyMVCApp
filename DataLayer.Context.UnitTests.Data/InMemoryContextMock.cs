@@ -19,8 +19,8 @@
 					f.Setup(m => m.Books).Returns(this.Books);
 					f.Setup(m => m.Orders).Returns(this.Orders);
 
-					f.Setup(m => m.Set<BookEntity>()).Returns(this.Books);
-					f.Setup(m => m.Set<OrderEntity>()).Returns(this.Orders);
+					f.Setup(m => m.Set<Book>()).Returns(this.Books);
+					f.Setup(m => m.Set<Order>()).Returns(this.Orders);
 										
 				});
 
@@ -30,21 +30,21 @@
 		}
 
 				
-		IDbSet<BookEntity> mBookEntity;
-		public IDbSet<BookEntity> Books
+		IDbSet<Book> mBookEntity;
+		public IDbSet<Book> Books
 		{
 			get
 			{				
-				return this.mBookEntity ?? (this.mBookEntity = new FakeDbSet<BookEntity>());
+				return this.mBookEntity ?? (this.mBookEntity = new FakeDbSet<Book>());
 			}
 		}
 
-		IDbSet<OrderEntity> mOrderEntity;
-		public IDbSet<OrderEntity> Orders
+		IDbSet<Order> mOrderEntity;
+		public IDbSet<Order> Orders
 		{
 			get
 			{
-				return this.mOrderEntity ?? (this.mOrderEntity = new FakeDbSet<OrderEntity>());
+				return this.mOrderEntity ?? (this.mOrderEntity = new FakeDbSet<Order>());
 			}
 		}
 	}

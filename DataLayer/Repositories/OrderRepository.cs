@@ -7,14 +7,14 @@
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository.Repositories.Base;
 
-	public class OrderRepository : GenericRepository<OrderEntity, int>, IOrderRepository
+	public class OrderRepository : GenericRepository<Order, int>, IOrderRepository
 	{
 		public OrderRepository(IMainContext context)
 			: base(context)
 		{
 		}
 
-		public OrderEntity GetByPromoCode(string promoCode)
+		public Order GetByPromoCode(string promoCode)
 		{
 			return FindBy(x => x.PromoCode == promoCode).SingleOrDefault();
 		}		

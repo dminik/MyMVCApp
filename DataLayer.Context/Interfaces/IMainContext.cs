@@ -8,11 +8,11 @@
 
 	public interface IMainContext : IDisposable
 	{
-		IDbSet<BookEntity> Books { get; set; }
+		IDbSet<Book> Books { get; set; }
 
-		IDbSet<OrderEntity> Orders { get; set; }
+		IDbSet<Order> Orders { get; set; }
 
-		IDbSet<OrderDetailEntity> OrderDetails { get; set; }
+		IDbSet<OrderDetail> OrderDetails { get; set; }
 
 		int SaveChanges();
 

@@ -21,6 +21,12 @@
 			this.OrderService = orderService;
 		}
 
+		protected override void Dispose(bool disposing)
+		{
+			this.OrderService.Dispose();
+			base.Dispose(disposing);
+		}
+
 		[AllowAnonymous]
 		public ActionResult Login()
 		{
@@ -59,5 +65,6 @@
 
 			return this.Login(new PromoLoginModel { PromoCode = newPromoCode });
 		}
+		
 	}
 }

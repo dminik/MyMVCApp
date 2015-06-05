@@ -38,7 +38,7 @@ namespace ServiceLayer.UnitTests
 		Mock<IDataRepositories> mockDataRepositories;
 		Mock<ICacheService> mockCacheService;
 
-		IEntityService<BookEntity, int> serviceUnderTest;
+		IEntityService<Book, int> serviceUnderTest;
 
 		[SetUp]
 		public void SetUpTest()
@@ -50,7 +50,7 @@ namespace ServiceLayer.UnitTests
 			mockDataRepositories = new Mock<IDataRepositories>();
 			this.mockDataRepositories.Setup(x => x.Books).Returns(this.mockBookRepository.Object);
 
-			this.serviceUnderTest = new SomeCachedEntityService<BookEntity, int>(
+			this.serviceUnderTest = new SomeCachedEntityService<Book, int>(
 				mockCacheService.Object,
 				mockDataRepositories.Object.Books, 
 				mockDataRepositories.Object);
@@ -75,14 +75,14 @@ namespace ServiceLayer.UnitTests
 															Times.Once);
 
 			this.mockCacheService.Verify(x => x.AddOrUpdate(It.IsAny<string>(), 
-															It.IsAny<BookEntity>(), 
+															It.IsAny<Book>(), 
 															It.IsAny<string>(), 
-															It.IsAny<Action<string, BookEntity>>(), 
-															It.IsAny<Action<string, BookEntity>>()), 
+															It.IsAny<Action<string, Book>>(), 
+															It.IsAny<Action<string, Book>>()), 
 															Times.Exactly(results1.Count()));
 			
 
-			this.mockCacheService.Verify(x => x.GetByGroupKey<BookEntity>(It.IsAny<string>()), Times.Never);
+			this.mockCacheService.Verify(x => x.GetByGroupKey<Book>(It.IsAny<string>()), Times.Never);
 
 			Assert.IsNotNull(results1);
 			Assert.AreEqual(TestDataProvider.GetBooks().Count, results1.Count());
@@ -93,7 +93,7 @@ namespace ServiceLayer.UnitTests
 													It.IsAny<string>()))
 									.Returns(new Object());
 
-			mockCacheService.Setup(x => x.GetByGroupKey<BookEntity>(It.Is<string>(y => y == "BookEntity_"))).Returns(TestDataProvider.GetBooks());
+			mockCacheService.Setup(x => x.GetByGroupKey<Book>(It.Is<string>(y => y == "BookEntity_"))).Returns(TestDataProvider.GetBooks());
 
 
 			// Act second
@@ -103,7 +103,7 @@ namespace ServiceLayer.UnitTests
 			Assert.IsNotNull(results2);
 			Assert.AreEqual(TestDataProvider.GetBooks().Count, results2.Count());
 			this.mockBookRepository.Verify(x => x.GetAll(), Times.Once);			
-			this.mockCacheService.Verify(x => x.GetByGroupKey<BookEntity>(It.IsAny<string>()), Times.Once);
+			this.mockCacheService.Verify(x => x.GetByGroupKey<Book>(It.IsAny<string>()), Times.Once);
 		}
 
 		[Test]
@@ -119,20 +119,20 @@ namespace ServiceLayer.UnitTests
 			var results1 = this.serviceUnderTest.GetById(1);
 
 			// Assert first			
-			this.mockCacheService.Verify(x => x.Get<BookEntity>(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+			this.mockCacheService.Verify(x => x.Get<Book>(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
 			this.mockBookRepository.Verify(x => x.GetByKey(It.IsAny<int>()), Times.Once);
 			
 			this.mockCacheService.Verify(x => x.AddOrUpdate(It.IsAny<string>(),
-															It.IsAny<BookEntity>(),
+															It.IsAny<Book>(),
 															It.IsAny<string>(),
-															It.IsAny<Action<string, BookEntity>>(),
-															It.IsAny<Action<string, BookEntity>>()),
+															It.IsAny<Action<string, Book>>(),
+															It.IsAny<Action<string, Book>>()),
 															Times.Once);
 
 			Assert.IsNotNull(results1);
 			
 			// делаем вид, что закешировали объект
-			mockCacheService.Setup(x => x.Get<BookEntity>(
+			mockCacheService.Setup(x => x.Get<Book>(
 													It.IsAny<string>(),
 													It.IsAny<string>()))
 									.Returns(testBook);			
@@ -142,14 +142,14 @@ namespace ServiceLayer.UnitTests
 
 			// Assert 
 			Assert.IsNotNull(results2);
-			this.mockCacheService.Verify(x => x.Get<BookEntity>(It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(2));
+			this.mockCacheService.Verify(x => x.Get<Book>(It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(2));
 			this.mockBookRepository.Verify(x => x.GetByKey(It.IsAny<int>()), Times.Once);
 
 			this.mockCacheService.Verify(x => x.AddOrUpdate(It.IsAny<string>(),
-															It.IsAny<BookEntity>(),
+															It.IsAny<Book>(),
 															It.IsAny<string>(),
-															It.IsAny<Action<string, BookEntity>>(),
-															It.IsAny<Action<string, BookEntity>>()),
+															It.IsAny<Action<string, Book>>(),
+															It.IsAny<Action<string, Book>>()),
 															Times.Once);			
 		}
 

@@ -3,8 +3,8 @@
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository.Repositories.Base;
 
-	public interface IOrderRepository : IGenericRepository<OrderEntity, int>
+	public interface IOrderRepository : IGenericRepository<Order, int>
 	{
-		OrderEntity GetByPromoCode(string promoCode);			
+		Order GetByPromoCode(string promoCode);			
 	}
 }

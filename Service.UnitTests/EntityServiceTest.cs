@@ -37,7 +37,7 @@ namespace ServiceLayer.UnitTests
 		Mock<IBookRepository> mockBookRepository;		
 		Mock<IDataRepositories> mockDataRepositories;
 
-		IEntityService<BookEntity, int> serviceUnderTest;
+		IEntityService<Book, int> serviceUnderTest;
 
 		[SetUp]
 		public void SetUpTest()
@@ -48,7 +48,7 @@ namespace ServiceLayer.UnitTests
 			mockDataRepositories = new Mock<IDataRepositories>();
 			this.mockDataRepositories.Setup(x => x.Books).Returns(this.mockBookRepository.Object);
 
-			this.serviceUnderTest = new SomeEntityService<BookEntity, int>(mockDataRepositories.Object.Books, mockDataRepositories.Object);
+			this.serviceUnderTest = new SomeEntityService<Book, int>(mockDataRepositories.Object.Books, mockDataRepositories.Object);
 		}
 
 		[Test]
@@ -83,7 +83,7 @@ namespace ServiceLayer.UnitTests
 			this.serviceUnderTest.Create(newItem);
 
 			// Assert
-			this.mockBookRepository.Verify(x => x.Add(It.IsAny<BookEntity>()), Times.Once);
+			this.mockBookRepository.Verify(x => x.Add(It.IsAny<Book>()), Times.Once);
 			this.mockDataRepositories.Verify(x => x.Save(), Times.Once);
 		}
 
@@ -105,7 +105,7 @@ namespace ServiceLayer.UnitTests
 			this.serviceUnderTest.Update(item);
 
 			// Assert
-			this.mockBookRepository.Verify(x => x.Edit(It.IsAny<BookEntity>()), Times.Once);
+			this.mockBookRepository.Verify(x => x.Edit(It.IsAny<Book>()), Times.Once);
 			this.mockDataRepositories.Verify(x => x.Save(), Times.Once);
 		}
 

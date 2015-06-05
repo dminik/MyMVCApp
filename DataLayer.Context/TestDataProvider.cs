@@ -6,28 +6,33 @@
 
 	public static class TestDataProvider
 	{
-		public static List<OrderEntity> GetOrders()
+		public static List<Order> GetOrders()
 		{
-			var books = new List<OrderEntity>
+			var books = new List<Order>
 			{
-				new OrderEntity
+				new Order
 				{
 					PromoCode = "q1",
 					Status = OrderStatus.BuildingByUser,
-					OrderDetails = new List<OrderDetailEntity> { new OrderDetailEntity { BookId = 0 } }
+					OrderDetails = new List<OrderDetail> { new OrderDetail { BookId = 1 } }
 				},
-				new OrderEntity { PromoCode = "q2", Status = OrderStatus.BuildingByUser }
+				new Order
+				{
+					PromoCode = "q2",
+					Status = OrderStatus.BuildingByUser,
+					OrderDetails = new List<OrderDetail> { new OrderDetail { BookId = 1 } }
+				},
 			};
 
 			return books;
 		}
 
-		public static List<BookEntity> GetBooks()
+		public static List<Book> GetBooks()
 		{
-			var books = new List<BookEntity>
+			var books = new List<Book>
 			{
-				new BookEntity { Name = "Буратино", Amount = 5, Price = 1000, Id = 0 },
-				new BookEntity { Name = "Война и мир", Amount = 2, Price = 500, Id = 1 }
+				new Book { Name = "Буратино", Amount = 5, Price = 1000, Id = 1 },
+				new Book { Name = "Война и мир", Amount = 2, Price = 500, Id = 2 }
 			};
 
 			return books;

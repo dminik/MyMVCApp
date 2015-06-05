@@ -252,13 +252,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\ILiveBookCounterHub.cs" />
-    <Compile Include="Hubs\LiveBookCounterHub.cs" />
-    <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="SignalR\ILiveBookCounterHub.cs" />
+    <Compile Include="SignalR\LiveBookCounterHub.cs" />
+    <Compile Include="SignalR\ChatHub.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\PromoLoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValuesController1.cs" />
+    <Compile Include="ViewModels\Book.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
@@ -391,7 +392,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -17,27 +17,27 @@
 		}
 
 		// GET api/book
-		public IEnumerable<BookEntity> Get()
+		public IEnumerable<Book> Get()
 		{
 			var bookList = this.BookService.GetAll();
 			return bookList;
 		}
 
 		// GET api/book/5
-		public BookEntity Get(int id)
+		public Book Get(int id)
 		{
 			var book = this.BookService.GetById(id);
 			return book;
 		}
 
 		// POST api/book
-		public void Post(BookEntity item)
+		public void Post(Book item)
 		{
 			this.BookService.Update(item);			
 		}
 
 		// PUT api/book/5
-		public void Put(BookEntity item)
+		public void Put(Book item)
 		{
 			this.BookService.Create(item);
 		}

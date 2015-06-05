@@ -4,7 +4,7 @@
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
-	public class OrderEntity : Entity<int>
+	public class Order : Entity<int>
 	{
 		[Index(IsUnique = true)]
 		[MaxLength(255)]
@@ -13,7 +13,7 @@
 
 		public OrderStatus Status { get; set; }
 
-		public virtual ICollection<OrderDetailEntity> OrderDetails { get; set; }
+		public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 	}
 
 	public enum OrderStatus

@@ -7,7 +7,7 @@
 	using ServiceLayer.Cache;
 	using ServiceLayer.Common;
 
-	public class BookService : CachedEntityService<BookEntity, int>, IBookService
+	public class BookService : CachedEntityService<Book, int>, IBookService
 	{
 		private readonly IBookRepository bookRepository;
 

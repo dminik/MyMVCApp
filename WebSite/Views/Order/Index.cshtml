@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataLayer.Model.Entities.BookEntity>
+﻿@model IEnumerable<WebSite.ViewModels.Book>
 
 @{
     ViewBag.Title = "Promo Books";
@@ -16,7 +16,8 @@
                 <h5 class="ui-widget-header">@currentBook.Name</h5>
                 <img src="~/Images/high_tatras_min.jpg" alt="@currentBook.Name" width="96" height="72">
                 <h6 class="ui-widget-header">@currentBook.Price руб.</h6>
-                <h6 class="ui-widget-header">@currentBook.Amount шт.</h6>
+                <h6 class="ui-widget-header">@currentBook.Amount шт. было</h6>
+                <h6 class="ui-widget-header">@currentBook.AmountOrdered шт. зарезервировано</h6>
                 <a href="http://jqueryui.com/resources/demos/droppable/images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
             </li>
         }

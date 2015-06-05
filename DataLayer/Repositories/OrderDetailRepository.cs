@@ -7,14 +7,14 @@
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository.Repositories.Base;
 
-	public class OrderDetailRepository : GenericRepository<OrderDetailEntity, int>, IOrderDetailRepository
+	public class OrderDetailRepository : GenericRepository<OrderDetail, int>, IOrderDetailRepository
 	{
 		public OrderDetailRepository(IMainContext context)
 			: base(context)
 		{
 		}
 
-		public OrderDetailEntity GetByBookId(string promoCode, int bookId)
+		public OrderDetail GetByBookId(string promoCode, int bookId)
 		{
 			return FindBy(x => 
 					x.Order.PromoCode == promoCode && 
@@ -25,13 +25,19 @@
 		public void Delete(int orderId, int bookId)
 		{
 			var orderDetails = FindBy(y => y.BookId == bookId && y.OrderId == orderId).FirstOrDefault();
-			Delete(orderDetails);
+			if (orderDetails != null)
+				Delete(orderDetails);
 		}
-		public OrderDetailEntity Add(int orderId, int bookId)
+		public OrderDetail Add(int orderId, int bookId)
 		{
-			var orderDetail = new OrderDetailEntity { OrderId = orderId, BookId = bookId, };
+			var orderDetail = new OrderDetail { OrderId = orderId, BookId = bookId, };
 			Add(orderDetail);
 			return orderDetail;
+		}
+
+		public int GetAmountOrdered(int bookId)
+		{
+			return FindBy(y => y.BookId == bookId).Count();
 		}
 	}
 }

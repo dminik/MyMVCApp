@@ -53,14 +53,14 @@
     <Compile Include="Cache\CacheServiceInMemory.cs" />
     <Compile Include="Cache\CacheServiceDistributed.cs" />
     <Compile Include="Cache\ICacheService.cs" />
+    <Compile Include="Services\BookService.cs" />
+    <Compile Include="Services\IBookService.cs" />
     <Compile Include="Services\IOrderService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\Common\CachedEntityService.cs" />
     <Compile Include="Services\Common\EntityService.cs" />
     <Compile Include="Services\Common\IEntityService.cs" />
     <Compile Include="Services\Common\IService.cs" />
-    <Compile Include="Services\BookService.cs" />
-    <Compile Include="Services\IBookService.cs" />
     <Compile Include="Initializer.cs" />
     <Compile Include="IoC\ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

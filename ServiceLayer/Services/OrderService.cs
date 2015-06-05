@@ -10,7 +10,7 @@
 	using ServiceLayer.Cache;
 	using ServiceLayer.Common;
 
-	public class OrderService : EntityService<OrderEntity, int>, IOrderService		
+	public class OrderService : EntityService<Order, int>, IOrderService		
 	{
 		private readonly IOrderRepository orderRepository;
 
@@ -23,10 +23,10 @@
 			this.dataRepositories = dataRepositories;
 		}
 
-		public OrderEntity CreateOrder()
+		public Order CreateOrder()
 		{
 			var promoCode = GeneratePromoCode();
-			var entity = new OrderEntity {PromoCode = promoCode, Status = OrderStatus.BuildingByUser, };
+			var entity = new Order {PromoCode = promoCode, Status = OrderStatus.BuildingByUser, };
 			base.Create(entity);
 			UnitOfWork.Save();
 
@@ -41,7 +41,7 @@
 			if (order == null)
 				throw new Exception(string.Format("Ошибочный промокод {0}", promoCode));
 
-			countOfReservedBooks = order.OrderDetails.Count;
+			countOfReservedBooks = GetAmountOrdered(bookId);
 			var book = dataRepositories.Books.GetByKey(bookId);
 			if(book == null)
 				throw new Exception(string.Format("Ошибочный bookId {0}", bookId));
@@ -79,6 +79,11 @@
 				throw new Exception(string.Format("Ошибочный промокод {0}", promoCode));
 			order.Status = status;
 			UnitOfWork.Save();
+		}
+
+		public int GetAmountOrdered(int bookId)
+		{
+			return dataRepositories.OrderDetails.GetAmountOrdered(bookId);
 		}
 
 		private string GeneratePromoCode()

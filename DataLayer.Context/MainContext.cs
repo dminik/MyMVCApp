@@ -13,11 +13,11 @@
 		{
 		}
 
-		public IDbSet<BookEntity> Books { get; set; }
+		public IDbSet<Book> Books { get; set; }
 
-		public IDbSet<OrderEntity> Orders { get; set; }
+		public IDbSet<Order> Orders { get; set; }
 
-		public IDbSet<OrderDetailEntity> OrderDetails { get; set; }
+		public IDbSet<OrderDetail> OrderDetails { get; set; }
 
 		IDbSet<TEntity> IMainContext.Set<TEntity>()
 		{

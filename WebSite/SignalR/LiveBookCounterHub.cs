@@ -1,14 +1,13 @@
-﻿namespace WebSite.Hubs
+﻿namespace WebSite.SignalR
 {
 	using System;
-
-	using DataLayer.Repository;
 
 	using Microsoft.AspNet.SignalR;
 
 	using ServiceLayer.Services;
 
 	using WebSite.BLL;
+	using WebSite.Hubs;
 
 	public class LiveBookCounterHub : Hub, ILiveBookCounterHub
 	{
@@ -47,7 +46,10 @@
 				errorMsg = ex.Message;
 			}
 
-			this.Clients.All.addedBook(bookId, countOfReservedBooks, errorMsg);
+			if (string.IsNullOrEmpty(errorMsg))
+				this.Clients.All.addedBook(bookId, countOfReservedBooks, "");
+			else			
+				this.Clients.Caller.addedBook(bookId, countOfReservedBooks, errorMsg);			
 		}
 
 		public void deleteBook(int bookId)
@@ -63,14 +65,16 @@
 					throw new Exception("PromoCode неопределен у текущего пользователя.");
 				
 				this.OrdeService.DeleteBook(promoCode, bookId, out countOfReservedBooks);
-
 			}
 			catch (Exception ex)
 			{
 				errorMsg = ex.Message;
 			}
-
-			this.Clients.All.deletedBook(bookId, countOfReservedBooks, errorMsg);			
+						
+			if (string.IsNullOrEmpty(errorMsg))
+				this.Clients.All.deletedBook(bookId, countOfReservedBooks, "");
+			else
+				this.Clients.Caller.deletedBook(bookId, countOfReservedBooks, errorMsg);
 		}	
 	}
 }

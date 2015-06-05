@@ -4,7 +4,7 @@
 
 	using ServiceLayer.Common;
 
-	public interface IBookService : IEntityService<BookEntity, int>
+	public interface IBookService : IEntityService<Book, int>
 	{
 		
 	}

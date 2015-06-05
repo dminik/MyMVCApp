@@ -55,7 +55,7 @@
 			controller.Post(itemForEdit);
 
 			// Assert			
-			this.mockBookService.Verify(x => x.Update(It.IsAny<BookEntity>()), Times.Once);
+			this.mockBookService.Verify(x => x.Update(It.IsAny<Book>()), Times.Once);
 		}
 
 		[Test]
@@ -68,7 +68,7 @@
 			controller.Put(itemForPut);
 
 			// Assert			
-			this.mockBookService.Verify(x => x.Create(It.IsAny<BookEntity>()), Times.Once);
+			this.mockBookService.Verify(x => x.Create(It.IsAny<Book>()), Times.Once);
 		}
 
 		[Test]

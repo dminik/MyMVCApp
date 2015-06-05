@@ -19,15 +19,15 @@
 
 		private void SeedOrders(MainContext context)
 		{
-			var books = new List<OrderEntity>
+			var books = new List<Order>
 			{
-				new OrderEntity
+				new Order
 				{
 					PromoCode = "q1",
 					Status = OrderStatus.BuildingByUser,
-					OrderDetails = new List<OrderDetailEntity> { new OrderDetailEntity { BookId = 0 } }
+					OrderDetails = new List<OrderDetail> { new OrderDetail { BookId = 0 } }
 				},
-				new OrderEntity { PromoCode = "q2", Status = OrderStatus.BuildingByUser }
+				new Order { PromoCode = "q2", Status = OrderStatus.BuildingByUser }
 			};
 
 			books.ForEach(s => context.Orders.AddOrUpdate(p => p.Id, s));

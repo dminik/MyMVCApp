@@ -10,7 +10,7 @@
 	/// </summary>
 	public class BooksContext : EmptyContext
 	{
-		public readonly List<BookEntity> Books;
+		public readonly List<Book> Books;
 
 		public BooksContext()
 		{
