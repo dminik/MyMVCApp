@@ -27,7 +27,7 @@
 			return this.DbSet.AsEnumerable();
 		}
 
-		public IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate)
+		protected IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate)
 		{
 			var query = this.DbSet.Where(predicate).AsEnumerable();
 			return query;

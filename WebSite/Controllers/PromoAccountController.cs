@@ -3,6 +3,8 @@
 	using System;
 	using System.Web.Mvc;
 
+	using ServiceLayer.Services;
+
 	using WebMatrix.WebData;
 
 	using WebSite.Filters;
@@ -12,6 +14,13 @@
 	[InitializeSimpleMembership]
 	public class PromoAccountController : Controller
 	{
+		private IOrderService OrderService { get; set; }
+
+		public PromoAccountController(IOrderService orderService)
+		{
+			this.OrderService = orderService;
+		}
+
 		[AllowAnonymous]
 		public ActionResult Login()
 		{
@@ -43,9 +52,11 @@
 		[AllowAnonymous]
 		public ActionResult CreatePromoCodeAndEnter()
 		{
-			var newPromoCode = Guid.NewGuid().ToString();
-
+			var newOrder = OrderService.CreateOrder();
+			var newPromoCode = newOrder.PromoCode;
+			
 			WebSecurity.CreateUserAndAccount(newPromoCode, newPromoCode);
+
 			return this.Login(new PromoLoginModel { PromoCode = newPromoCode });
 		}
 	}

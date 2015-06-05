@@ -10,8 +10,7 @@
 		where T : Entity<TKeyType>
 	{
 		IEnumerable<T> GetAll();
-
-		IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
+		
 
 		T GetByKey(TKeyType key);
 

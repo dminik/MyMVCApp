@@ -22,50 +22,48 @@
 			this.orderRepository = dataRepositories.Orders;
 			this.dataRepositories = dataRepositories;
 		}
-		
-		public void CreateOrder()
+
+		public OrderEntity CreateOrder()
 		{
 			var promoCode = GeneratePromoCode();
 			var entity = new OrderEntity {PromoCode = promoCode, Status = OrderStatus.BuildingByUser, };
 			base.Create(entity);
+			UnitOfWork.Save();
+
+			return entity;
 		}
 
 		public void AddBook(string promoCode, int bookId)
 		{
-			var order = this.orderRepository.FindBy(x => x.PromoCode == promoCode).SingleOrDefault();
-			if (order == null)
-				throw new Exception(string.Format("Ошибочный промокод {0}", promoCode));
-
-			order.OrderDetails.Add(new OrderDetailEntity{BookId = bookId, });
+			this.orderRepository.AddOrderDetail(promoCode, bookId);			
+			UnitOfWork.Save();
 		}
 
 		public void RemoveBook(string promoCode, int bookId)
 		{
-			var order = this.orderRepository.FindBy(x => x.PromoCode == promoCode).SingleOrDefault();
-			if (order != null)
-			{
-				var orderDetails = order.OrderDetails.SingleOrDefault(x => x.BookId == bookId);
-				if (orderDetails != null)
-					order.OrderDetails.Remove(orderDetails);
-			}
+			this.orderRepository.DeleteOrderDetail(promoCode, bookId);
+			UnitOfWork.Save();				
 		}
 
 		public void ChangeStatus(string promoCode, OrderStatus status)
 		{
-			var order = this.orderRepository.FindBy(x => x.PromoCode == promoCode).SingleOrDefault() ?? new OrderEntity();
+			var order = this.orderRepository.GetByPromoCode(promoCode);
+			if (order == null)
+				throw new Exception(string.Format("Ошибочный промокод {0}", promoCode));
 			order.Status = status;
+			UnitOfWork.Save();
 		}
 
 		private string GeneratePromoCode()
 		{
-			string code;
+			string promoCode;
 			do
 			{
-				code = Guid.NewGuid().ToString();
+				promoCode = Guid.NewGuid().ToString();				
 			}
-			while (orderRepository.FindBy(x => x.PromoCode == code).FirstOrDefault() == null);
+			while (orderRepository.GetByPromoCode(promoCode) != null);
 
-			return code;
+			return promoCode;
 		}
 	}
 }

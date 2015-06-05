@@ -5,5 +5,11 @@
 
 	public interface IOrderRepository : IGenericRepository<OrderEntity, int>
 	{
+		OrderEntity GetByPromoCode(string promoCode);
+
+		OrderDetailEntity AddOrderDetail(string promoCode, int bookId);
+
+		void DeleteOrderDetail(string promoCode, int bookId);
+
 	}
 }

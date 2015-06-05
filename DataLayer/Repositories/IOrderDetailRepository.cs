@@ -5,5 +5,6 @@ namespace DataLayer.Repository.Repositories
 
 	public interface IOrderDetailRepository : IGenericRepository<OrderDetailEntity, int>
 	{
+		OrderDetailEntity GetByBookId(string promoCode, int bookId);
 	}
 }

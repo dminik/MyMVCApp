@@ -4,7 +4,7 @@ namespace ServiceLayer.Services
 
 	public interface IOrderService
 	{
-		void CreateOrder();
+		OrderEntity CreateOrder();
 
 		void AddBook(string promoCode, int bookId);
 
