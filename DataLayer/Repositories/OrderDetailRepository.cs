@@ -1,5 +1,6 @@
 ﻿namespace DataLayer.Repository.Repositories
 {
+	using System;
 	using System.Linq;
 
 	using DataLayer.Context.Interfaces;
@@ -19,6 +20,18 @@
 					x.Order.PromoCode == promoCode && 
 					x.BookId == bookId)
 				.SingleOrDefault();
-		}		
+		}
+
+		public void Delete(int orderId, int bookId)
+		{
+			var orderDetails = FindBy(y => y.BookId == bookId && y.OrderId == orderId).FirstOrDefault();
+			Delete(orderDetails);
+		}
+		public OrderDetailEntity Add(int orderId, int bookId)
+		{
+			var orderDetail = new OrderDetailEntity { OrderId = orderId, BookId = bookId, };
+			Add(orderDetail);
+			return orderDetail;
+		}
 	}
 }

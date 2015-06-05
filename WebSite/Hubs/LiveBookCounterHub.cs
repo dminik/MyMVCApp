@@ -23,34 +23,54 @@
 
 		
 		public void addBook(int bookId)
-		{			
-			var promoCode = User.PromoCode;
+		{
+			string errorMsg = "";
+			int countOfReservedBooks = 0;
 
-			if (string.IsNullOrEmpty(promoCode)) 
-				throw new Exception("PromoCode неопределен у текущего пользователя.");
-
-			int countOfReservedBooks;
-			var isAdded = this.OrdeService.AddBook(promoCode, bookId, out countOfReservedBooks);
-
-			if (isAdded)
-				this.Clients.All.addedBook(bookId, countOfReservedBooks);
-			else
+			try
 			{
-				throw new Exception("Книга не добавилась, так как кончились экземпляры.");
+				var promoCode = User.PromoCode;
+
+				if (string.IsNullOrEmpty(promoCode)) 
+					throw new Exception("PromoCode неопределен у текущего пользователя.");
+
+			
+				var isAdded = this.OrdeService.AddBook(promoCode, bookId, out countOfReservedBooks);
+
+				if (!isAdded)				
+				{
+					throw new Exception("Книга не добавилась, так как кончились экземпляры.");
+				}			
 			}
+			catch (Exception ex)
+			{
+				errorMsg = ex.Message;
+			}
+
+			this.Clients.All.addedBook(bookId, countOfReservedBooks, errorMsg);
 		}
 
 		public void deleteBook(int bookId)
 		{
-			var promoCode = User.PromoCode;
+			string errorMsg = "";
+			int countOfReservedBooks = 0;
 
-			if (string.IsNullOrEmpty(promoCode))
-				throw new Exception("PromoCode неопределен у текущего пользователя.");
+			try
+			{
+				var promoCode = User.PromoCode;
 
-			int countOfReservedBooks;
-			this.OrdeService.DeleteBook(promoCode, bookId, out countOfReservedBooks);
+				if (string.IsNullOrEmpty(promoCode))
+					throw new Exception("PromoCode неопределен у текущего пользователя.");
+				
+				this.OrdeService.DeleteBook(promoCode, bookId, out countOfReservedBooks);
 
-			this.Clients.All.deletedBook(bookId, countOfReservedBooks);			
+			}
+			catch (Exception ex)
+			{
+				errorMsg = ex.Message;
+			}
+
+			this.Clients.All.deletedBook(bookId, countOfReservedBooks, errorMsg);			
 		}	
 	}
 }

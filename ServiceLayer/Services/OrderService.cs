@@ -48,7 +48,7 @@
 
 			if (book.Amount > countOfReservedBooks)
 			{
-				this.orderRepository.AddOrderDetail(promoCode, bookId);
+				dataRepositories.OrderDetails.Add(order.Id, bookId);
 				UnitOfWork.Save();
 				countOfReservedBooks++;
 				isAdded = true;
@@ -67,7 +67,7 @@
 			if (order == null)
 				throw new Exception(string.Format("Ошибочный промокод {0}", promoCode));
 
-			this.orderRepository.DeleteOrderDetail(promoCode, bookId);
+			dataRepositories.OrderDetails.Delete(order.Id, bookId);
 			UnitOfWork.Save();
 			countOfReservedBooks = order.OrderDetails.Count;								
 		}
