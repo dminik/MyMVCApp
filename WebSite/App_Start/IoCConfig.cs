@@ -7,6 +7,9 @@
 
 	using ServiceLayer.IoC;
 
+	using WebSite.BLL;
+	using WebSite.Hubs;
+
 	public class IoCConfig
 	{
 		public static void Register()
@@ -15,8 +18,10 @@
 			var builder = new ContainerBuilder();
 
 			builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
-
+			
 			builder.RegisterModule(new ServiceModule());
+
+			builder.RegisterType(typeof(UserIdentity)).As(typeof(IUserIdentity)).InstancePerHttpRequest();
 
 			var container = builder.Build();
 

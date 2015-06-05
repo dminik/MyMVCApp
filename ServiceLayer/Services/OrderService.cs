@@ -14,7 +14,7 @@
 	{
 		private readonly IOrderRepository orderRepository;
 
-		private IDataRepositories dataRepositories;
+		private readonly IDataRepositories dataRepositories;
 
 		public OrderService(IDataRepositories dataRepositories)
 			: base(dataRepositories.Orders, dataRepositories)
@@ -33,16 +33,43 @@
 			return entity;
 		}
 
-		public void AddBook(string promoCode, int bookId)
+		public bool AddBook(string promoCode, int bookId, out int countOfReservedBooks)
 		{
-			this.orderRepository.AddOrderDetail(promoCode, bookId);			
-			UnitOfWork.Save();
+			bool isAdded;
+
+			var order = this.orderRepository.GetByPromoCode(promoCode);
+			if (order == null)
+				throw new Exception(string.Format("Ошибочный промокод {0}", promoCode));
+
+			countOfReservedBooks = order.OrderDetails.Count;
+			var book = dataRepositories.Books.GetByKey(bookId);
+			if(book == null)
+				throw new Exception(string.Format("Ошибочный bookId {0}", bookId));
+
+			if (book.Amount > countOfReservedBooks)
+			{
+				this.orderRepository.AddOrderDetail(promoCode, bookId);
+				UnitOfWork.Save();
+				countOfReservedBooks++;
+				isAdded = true;
+			}
+			else
+			{
+				isAdded = false;
+			}
+
+			return isAdded;
 		}
 
-		public void RemoveBook(string promoCode, int bookId)
-		{
+		public void DeleteBook(string promoCode, int bookId, out int countOfReservedBooks)
+		{			
+			var order = this.orderRepository.GetByPromoCode(promoCode);
+			if (order == null)
+				throw new Exception(string.Format("Ошибочный промокод {0}", promoCode));
+
 			this.orderRepository.DeleteOrderDetail(promoCode, bookId);
-			UnitOfWork.Save();				
+			UnitOfWork.Save();
+			countOfReservedBooks = order.OrderDetails.Count;								
 		}
 
 		public void ChangeStatus(string promoCode, OrderStatus status)

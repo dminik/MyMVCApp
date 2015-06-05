@@ -29,6 +29,14 @@
 
 </div>
 
+<h2>Живой счетчик книг</h2>
+<div class="live-counter-container">
+    <input id="bookId" type="hidden" value="1" />
+    
+    Количество: <input type="text" id="live-counter" value="0"/>
+    <input id="btnAddBook" type="button" value="Добавить"/>
+    <input id="btnDeleteBook" type="button" value="Удалить"/>
+</div>
 
 <h2>Чат-комната</h2>
 
@@ -55,11 +63,12 @@
 </div>
 
 
-@section Scripts {    
+@section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
-    @Scripts.Render("~/bundles/signalR")      
+    @Scripts.Render("~/bundles/signalR")
     @Scripts.Render("~/bundles/dragdropList")
     <script src="~/signalr/hubs"></script>
     @Scripts.Render("~/bundles/util")
-    
+    @Scripts.Render("~/bundles/liveBookCounter")
+
 }

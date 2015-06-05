@@ -19,7 +19,7 @@
 				.AsImplementedInterfaces()
 				.InstancePerLifetimeScope();
 
-			builder.RegisterType(typeof(DataRepositories)).As(typeof(IDataRepositories)).InstancePerRequest();
+			builder.RegisterType(typeof(DataRepositories)).As(typeof(IDataRepositories)).InstancePerLifetimeScope();
 		}
 	}
 }

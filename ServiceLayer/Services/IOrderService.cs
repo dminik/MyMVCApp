@@ -6,9 +6,9 @@ namespace ServiceLayer.Services
 	{
 		OrderEntity CreateOrder();
 
-		void AddBook(string promoCode, int bookId);
+		bool AddBook(string promoCode, int bookId, out int countOfReservedBooks);
 
-		void RemoveBook(string promoCode, int bookId);
+		void DeleteBook(string promoCode, int bookId, out int countOfReservedBooks);
 
 		void ChangeStatus(string promoCode, OrderStatus status);
 	}
