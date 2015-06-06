@@ -8,6 +8,6 @@ namespace DataLayer.Repository.Repositories
 		OrderDetail GetByBookId(string promoCode, int bookId);
 		OrderDetail Add(int orderId, int bookId);	
 		void Delete(int orderId, int bookId);
-		int GetAmountOrdered(int bookId);
+		int GetRestAmount(int bookId);
 	}
 }

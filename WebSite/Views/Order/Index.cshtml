@@ -12,13 +12,15 @@
 
         @foreach (var currentBook in Model)
         {
-            <li class="ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-                <input class="book-id" type="hidden" value="@currentBook.Id" />
+            <li id="@currentBook.Id" class="book ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
                 <h5 class="ui-widget-header">@currentBook.Name</h5>
                 <img src="~/Images/high_tatras_min.jpg" alt="@currentBook.Name" width="96" height="72">
                 <h6 class="ui-widget-header">@currentBook.Price руб.</h6>
                 <h6 class="ui-widget-header">@currentBook.Amount шт. было</h6>
-                <h6 class="ui-widget-header">@currentBook.AmountOrdered шт. зарезервировано</h6>
+                <h6 class="ui-widget-header">
+                    <span class="amount-ordered">@currentBook.RestAmount</span>
+                    шт. осталось
+                </h6>
                 <a href="http://jqueryui.com/resources/demos/droppable/images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
             </li>
         }

@@ -1,13 +1,9 @@
 ﻿namespace ServiceLayer.Services
 {
-	using System;
-	using System.Linq;
-
+	using System;	
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository;
-	using DataLayer.Repository.Repositories;
-
-	using ServiceLayer.Cache;
+	using DataLayer.Repository.Repositories;	
 	using ServiceLayer.Common;
 
 	public class OrderService : EntityService<Order, int>, IOrderService		
@@ -33,7 +29,7 @@
 			return entity;
 		}
 
-		public bool AddBook(string promoCode, int bookId, out int countOfReservedBooks)
+		public bool AddBook(string promoCode, int bookId, out int restAmount)
 		{
 			bool isAdded;
 
@@ -41,16 +37,16 @@
 			if (order == null)
 				throw new Exception("Ошибочный промокод");
 
-			countOfReservedBooks = GetAmountOrdered(bookId);
+			restAmount = GetRestAmount(bookId);
 			var book = dataRepositories.Books.GetByKey(bookId);
 			if(book == null)
 				throw new Exception(string.Format("Ошибочный bookId {0}", bookId));
 
-			if (book.Amount > countOfReservedBooks)
+			if (restAmount > 0)
 			{
 				dataRepositories.OrderDetails.Add(order.Id, bookId);
 				UnitOfWork.Save();
-				countOfReservedBooks++;
+				restAmount--;
 				isAdded = true;
 			}
 			else
@@ -61,7 +57,7 @@
 			return isAdded;
 		}
 
-		public void DeleteBook(string promoCode, int bookId, out int countOfReservedBooks)
+		public void DeleteBook(string promoCode, int bookId, out int restAmount)
 		{			
 			var order = this.orderRepository.GetByPromoCode(promoCode);
 			if (order == null)
@@ -69,7 +65,7 @@
 
 			dataRepositories.OrderDetails.Delete(order.Id, bookId);
 			UnitOfWork.Save();
-			countOfReservedBooks = GetAmountOrdered(bookId);								
+			restAmount = GetRestAmount(bookId);								
 		}
 
 		public void ChangeStatus(string promoCode, OrderStatus status)
@@ -81,11 +77,14 @@
 			UnitOfWork.Save();
 		}
 
-		public int GetAmountOrdered(int bookId)
+		public int GetRestAmount(int bookId)
 		{
-			return dataRepositories.OrderDetails.GetAmountOrdered(bookId);
+			var amount = dataRepositories.Books.GetByKey(bookId).Amount;
+			var orderedAmount = dataRepositories.OrderDetails.GetRestAmount(bookId);
+			var restAmount = amount - orderedAmount;
+			return restAmount > 0 ? restAmount : 0;
 		}
-
+		
 		private string GeneratePromoCode()
 		{
 			string promoCode;

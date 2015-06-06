@@ -9,6 +9,6 @@
 			Amount = bookEntity.Amount;
 			Price = bookEntity.Price;			
 		}
-		public int AmountOrdered { get; set; }
+		public int RestAmount { get; set; }
 	}
 }

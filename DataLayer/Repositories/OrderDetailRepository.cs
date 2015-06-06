@@ -35,7 +35,7 @@
 			return orderDetail;
 		}
 
-		public int GetAmountOrdered(int bookId)
+		public int GetRestAmount(int bookId)
 		{
 			return FindBy(y => y.BookId == bookId).Count();
 		}

@@ -8,12 +8,12 @@ namespace ServiceLayer.Services
 	{
 		Order CreateOrder();
 
-		bool AddBook(string promoCode, int bookId, out int countOfReservedBooks);
+		bool AddBook(string promoCode, int bookId, out int restAmount);
 
-		void DeleteBook(string promoCode, int bookId, out int countOfReservedBooks);
+		void DeleteBook(string promoCode, int bookId, out int restAmount);
 
 		void ChangeStatus(string promoCode, OrderStatus status);
 
-		int GetAmountOrdered(int bookId);
+		int GetRestAmount(int bookId);
 	}
 }

@@ -36,7 +36,7 @@
 			foreach (var bookEntity in bookList)
 			{
 				var bookDTO = new Book(bookEntity);
-				bookDTO.AmountOrdered = OrderService.GetAmountOrdered(bookDTO.Id);
+				bookDTO.RestAmount = OrderService.GetRestAmount(bookDTO.Id);
 
 				modelBookList.Add(bookDTO);
 			}
