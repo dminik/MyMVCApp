@@ -1,0 +1,13 @@
+﻿@model WebSite.ViewModels.Book
+
+<li id="@Model.Id" class="book ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
+    <h5 class="ui-widget-header">@Model.Name</h5>
+    <img src="~/Images/high_tatras_min.jpg" alt="@Model.Name" width="96" height="72">
+    <h6 class="ui-widget-header">@Model.Price руб.</h6>
+    <h6 class="ui-widget-header">@Model.Amount шт. было</h6>
+    <h6 class="ui-widget-header">
+        <span class="amount-ordered">@Model.RestAmount</span>
+        шт. осталось
+    </h6>
+    <a href="http://jqueryui.com/resources/demos/droppable/images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+</li>

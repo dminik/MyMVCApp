@@ -4,27 +4,13 @@
     ViewBag.Title = "Promo Books";
 }
 
-<h2></h2>
-
 <div class="ui-widget ui-helper-clearfix">
 
     <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix ui-droppable">
-
         @foreach (var currentBook in Model.Where(x => !x.IsOrdered))
         {
-            <li id="@currentBook.Id" class="book ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-                <h5 class="ui-widget-header">@currentBook.Name</h5>
-                <img src="~/Images/high_tatras_min.jpg" alt="@currentBook.Name" width="96" height="72">
-                <h6 class="ui-widget-header">@currentBook.Price руб.</h6>
-                <h6 class="ui-widget-header">@currentBook.Amount шт. было</h6>
-                <h6 class="ui-widget-header">
-                    <span class="amount-ordered">@currentBook.RestAmount</span>
-                    шт. осталось
-                </h6>
-                <a href="http://jqueryui.com/resources/demos/droppable/images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-            </li>
+            @Html.Partial("_Book", currentBook)        
         }
-
     </ul>
 
     <div id="trash" class="ui-widget-content ui-state-default ui-droppable">
@@ -32,18 +18,8 @@
         <ul class="gallery ui-helper-reset">
             @foreach (var currentBook in Model.Where(x => x.IsOrdered))
             {
-                <li id="@currentBook.Id" class="book ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-                    <h5 class="ui-widget-header">@currentBook.Name</h5>
-                    <img src="~/Images/high_tatras_min.jpg" alt="@currentBook.Name" width="96" height="72">
-                    <h6 class="ui-widget-header">@currentBook.Price руб.</h6>
-                    <h6 class="ui-widget-header">@currentBook.Amount шт. было</h6>
-                    <h6 class="ui-widget-header">
-                        <span class="amount-ordered">@currentBook.RestAmount</span>
-                        шт. осталось
-                    </h6>
-                    <a href="http://jqueryui.com/resources/demos/droppable/images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-                </li>
-            }
+                @Html.Partial("_Book", currentBook)                
+            }        
         </ul>
 </div>
 

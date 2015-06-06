@@ -23,7 +23,7 @@
 				$item.append(recycleIcon).appendTo($list).fadeIn(function () {
 					$item
 						//.animate({ width: "48px" })
-						.find("img")
+						.find("img");
 					//.animate({ height: "36px" });
 				});
 			});
@@ -67,6 +67,14 @@
 
 		// let the gallery items be draggable
 		$("li", $gallery).draggable({
+			cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+			revert: "invalid", // when not dropped, the item will revert back to its initial position
+			containment: "document",
+			helper: "clone",
+			cursor: "move"
+		});
+
+		$("li", $trash).draggable({
 			cancel: "a.ui-icon", // clicking an icon won't initiate dragging
 			revert: "invalid", // when not dropped, the item will revert back to its initial position
 			containment: "document",
