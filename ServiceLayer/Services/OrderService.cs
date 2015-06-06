@@ -69,7 +69,7 @@
 
 			dataRepositories.OrderDetails.Delete(order.Id, bookId);
 			UnitOfWork.Save();
-			countOfReservedBooks = order.OrderDetails.Count;								
+			countOfReservedBooks = GetAmountOrdered(bookId);								
 		}
 
 		public void ChangeStatus(string promoCode, OrderStatus status)

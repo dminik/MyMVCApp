@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Favorites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <folders />
+  <favorites>
+    <Favorite>
+      <name>Index.cshtml</name>
+      <path>WebSite\Views\Order\Index.cshtml</path>
+      <absolutePath>D:\!Work\MyMVCApp\WebSite\Views\Order\Index.cshtml</absolutePath>
+    </Favorite>
+    <Favorite>
+      <name>OrderController.cs</name>
+      <path>WebSite\Controllers\OrderController.cs</path>
+      <absolutePath>D:\!Work\MyMVCApp\WebSite\Controllers\OrderController.cs</absolutePath>
+    </Favorite>
+    <Favorite>
+      <name>liveBookCounter.js</name>
+      <path>WebSite\Scripts\liveBookCounter.js</path>
+      <absolutePath>D:\!Work\MyMVCApp\WebSite\Scripts\liveBookCounter.js</absolutePath>
+    </Favorite>
+    <Favorite>
+      <name>BookService.cs</name>
+      <path>ServiceLayer\Services\BookService.cs</path>
+      <absolutePath>D:\!Work\MyMVCApp\ServiceLayer\Services\BookService.cs</absolutePath>
+    </Favorite>
+    <Favorite>
+      <name>LiveBookCounterHub.cs</name>
+      <path>WebSite\SignalR\LiveBookCounterHub.cs</path>
+      <absolutePath>D:\!Work\MyMVCApp\WebSite\SignalR\LiveBookCounterHub.cs</absolutePath>
+    </Favorite>
+  </favorites>
+</Favorites>
