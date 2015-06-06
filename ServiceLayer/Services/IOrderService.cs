@@ -1,5 +1,7 @@
 namespace ServiceLayer.Services
 {
+	using System.Collections.Generic;
+
 	using DataLayer.Model.Entities;
 
 	using ServiceLayer.Common;
@@ -13,6 +15,8 @@ namespace ServiceLayer.Services
 		void DeleteBook(string promoCode, int bookId, out int restAmount);
 
 		void ChangeStatus(string promoCode, OrderStatus status);
+
+		IEnumerable<OrderDetail> GetByPromoCode(string promoCode);
 
 		int GetRestAmount(int bookId);
 	}

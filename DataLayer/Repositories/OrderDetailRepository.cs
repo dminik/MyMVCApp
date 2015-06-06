@@ -1,6 +1,7 @@
 ﻿namespace DataLayer.Repository.Repositories
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Linq;
 
 	using DataLayer.Context.Interfaces;
@@ -20,6 +21,11 @@
 					x.Order.PromoCode == promoCode && 
 					x.BookId == bookId)
 				.SingleOrDefault();
+		}
+
+		public IEnumerable<OrderDetail> GetByPromoCode(string promoCode)
+		{
+			return FindBy(x => x.Order.PromoCode == promoCode);
 		}
 
 		public void Delete(int orderId, int bookId)

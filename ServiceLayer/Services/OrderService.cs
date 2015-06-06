@@ -1,6 +1,8 @@
 ﻿namespace ServiceLayer.Services
 {
-	using System;	
+	using System;
+	using System.Collections.Generic;
+
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository;
 	using DataLayer.Repository.Repositories;	
@@ -75,6 +77,11 @@
 				throw new Exception(string.Format("Ошибочный промокод {0}", promoCode));
 			order.Status = status;
 			UnitOfWork.Save();
+		}
+
+		public IEnumerable<OrderDetail> GetByPromoCode(string promoCode)
+		{
+			return dataRepositories.OrderDetails.GetByPromoCode(promoCode);
 		}
 
 		public int GetRestAmount(int bookId)

@@ -7,6 +7,7 @@
 	using ServiceLayer;
 	using ServiceLayer.Services;
 
+	using WebSite.BLL;
 	using WebSite.ViewModels;
 
 	[Authorize]
@@ -14,11 +15,13 @@
 	{
 		protected IBookService BookService;
 		protected IOrderService OrderService;
+		protected IUserIdentity UserIdentity;
 
-		public OrderController(IBookService bookService, IOrderService orderService)
+		public OrderController(IBookService bookService, IOrderService orderService, IUserIdentity user)
 		{
 			this.BookService = bookService;
 			this.OrderService = orderService;
+			this.UserIdentity = user;
 		}
 
 		protected override void Dispose(bool disposing)
@@ -32,13 +35,16 @@
 		{
 			var bookList = this.BookService.GetAll().ToList();
 
+			var promoCode = UserIdentity.PromoCode;
+			var ownOrderDetails = OrderService.GetByPromoCode(promoCode).ToList();
+
 			var modelBookList = new List<Book>();
 			foreach (var bookEntity in bookList)
 			{
-				var bookDTO = new Book(bookEntity);
-				bookDTO.RestAmount = OrderService.GetRestAmount(bookDTO.Id);
-
-				modelBookList.Add(bookDTO);
+				var dtoBook = new Book(bookEntity);
+				dtoBook.RestAmount = OrderService.GetRestAmount(dtoBook.Id);
+				dtoBook.IsOrdered = ownOrderDetails.Any(x => x.BookId == dtoBook.Id);
+				modelBookList.Add(dtoBook);
 			}
 
 			return this.View(modelBookList);

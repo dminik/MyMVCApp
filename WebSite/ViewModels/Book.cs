@@ -10,5 +10,7 @@
 			Price = bookEntity.Price;			
 		}
 		public int RestAmount { get; set; }
+
+		public bool IsOrdered { get; set; }
 	}
 }
