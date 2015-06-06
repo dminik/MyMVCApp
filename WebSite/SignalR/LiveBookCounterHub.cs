@@ -46,10 +46,10 @@
 				errorMsg = ex.Message;
 			}
 
-			if (string.IsNullOrEmpty(errorMsg))
-				this.Clients.All.addedBook(bookId, restAmount, "");
-			else			
-				this.Clients.Caller.addedBook(bookId, restAmount, errorMsg);			
+			if (string.IsNullOrEmpty(errorMsg))							
+				this.Clients.Others.refreshBookAmountForAll(bookId, restAmount, "");			
+			
+			this.Clients.Caller.addedBook(bookId, restAmount, errorMsg);
 		}
 
 		public void deleteBook(int bookId)
@@ -71,10 +71,10 @@
 				errorMsg = ex.Message;
 			}
 						
-			if (string.IsNullOrEmpty(errorMsg))
-				this.Clients.All.deletedBook(bookId, restAmount, "");
-			else
-				this.Clients.Caller.deletedBook(bookId, restAmount, errorMsg);
+			if (string.IsNullOrEmpty(errorMsg))							
+				this.Clients.Others.refreshBookAmountForAll(bookId, restAmount, "");
+
+			this.Clients.Caller.deletedBook(bookId, restAmount, errorMsg);
 		}	
 	}
 }

@@ -33,6 +33,12 @@ function dragdropListInit(addBook, deleteBook) {
 		}
 	});
 
+	// Блокируем все книжки при первой отрисовке которые нельзя заказать 
+	$("#gallery li").each(function (index) {
+		if ($(this).find(".amount-ordered").text() == 0) {
+			$(this).draggable("disable");
+		}
+	});
 	
 	function viewLargerImage($link) {
 		var src = $link.attr("href"),
