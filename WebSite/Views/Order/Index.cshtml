@@ -1,61 +1,48 @@
 ﻿@model IEnumerable<WebSite.ViewModels.Book>
 
 @{
-    ViewBag.Title = "Promo Books";
+    ViewBag.Title = "Книги по промоакциии";
 }
 
 <div class="ui-widget ui-helper-clearfix">
-
+    <h4 class="ui-widget-header"><span class="ui-icon ui-icon-bookmark"></span> Библиотека книг</h4>
     <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix ui-droppable">
+        
         @foreach (var currentBook in Model.Where(x => !x.IsOrdered))
         {
-            @Html.Partial("_Book", currentBook)        
+            @Html.Partial("_Book", currentBook)
         }
     </ul>
 
     <div id="trash" class="ui-widget-content ui-state-default ui-droppable">
-        <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash">Trash</span> Trash</h4>
+        <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash"></span> Ваша корзина</h4>
         <ul class="gallery ui-helper-reset">
             @foreach (var currentBook in Model.Where(x => x.IsOrdered))
             {
-                @Html.Partial("_Book", currentBook)                
-            }        
+                @Html.Partial("_Book", currentBook)
+            }
         </ul>
-</div>
+
+
+        <h4>Сумма заказа:</h4><h2 id="totalSum"></h2>
+        <input id="btnFinishOrder" type="button" value="Заказать"/>
+        
+    </div>
 
 </div>
+
+
+
+
 
 <h2>Живой счетчик книг</h2>
 <div class="live-counter-container">
     <input id="bookId" type="hidden" value="1" />
-    
-    Количество: <input type="text" id="live-counter" value="0"/>
+
+    Оставшееся количество для Буратино: 
+    <input type="text" id="live-counter" value="@Model.Single(x => x.Id == 1).RestAmount" />
     <input id="btnAddBook" type="button" value="Добавить"/>
     <input id="btnDeleteBook" type="button" value="Удалить"/>
-</div>
-
-<h2>Чат-комната</h2>
-
-<div class="main">
-    <div id="loginBlock">
-        Введите логин:<br />
-        <input id="txtUserName" type="text" />
-        <input id="btnLogin" type="button" value="Войти" />
-    </div>
-    <div id="chatBody" >
-        <div id="header"></div>
-        <div id="inputForm">
-            <input type="text" id="message" />
-            <input type="button" id="sendmessage" value="Отправить" />
-        </div>
-        <div id="chatroom"></div>
-
-        <div id="chatusers">
-            <p><b>Все пользователи</b></p>
-        </div>
-    </div>
-    <input id="hdId" type="hidden" />
-    <input id="username" type="hidden" />
 </div>
 
 
@@ -63,8 +50,7 @@
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/signalR")
     @Scripts.Render("~/bundles/dragdropList")
-    <script src="~/signalr/hubs"></script>
-    @Scripts.Render("~/bundles/util")
+    <script src="~/signalr/hubs"></script>    
     @Scripts.Render("~/bundles/liveBookCounter")
 
 }

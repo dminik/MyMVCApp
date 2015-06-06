@@ -73,8 +73,8 @@
 	// Привязка событий контролов	
 	$.connection.hub.start().done(function () {
 
-		$('#btnAddBook').click(addBook1);
-		$('#btnDeleteBook').click(deleteBook1);   
+		$('#btnDeleteBook').click(addBook1);
+		$('#btnAddBook').click(deleteBook1);   
 
 		dragdropList.Init(addBook, deleteBook);
 		
