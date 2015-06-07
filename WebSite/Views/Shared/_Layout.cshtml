@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>@ViewBag.Title - Contoso University</title>
+    <title>@ViewBag.Title - Книги по промоакциии</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
     <meta name="viewport" content="width=device-width"/>
 
@@ -18,7 +18,7 @@
 <header>
     <div class="content-wrapper">
         <div class="float-left">
-            <p class="site-title">@Html.ActionLink("Contoso University", "Index", "Home")</p>
+            <p class="site-title">@Html.ActionLink("Книги по промоакциии", "Index", "Order")</p>
         </div>
         <div class="float-right">
             <section id="login">
@@ -26,13 +26,8 @@
             </section>
             <nav>
                 <ul id="menu">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Students", "Index", "Student")</li>
-                    <li>@Html.ActionLink("Courses", "Index", "Course")</li>
-                    <li>@Html.ActionLink("Instructors", "Index", "Instructor")</li>
-                    <li>@Html.ActionLink("Departments", "Index", "Department")</li>
+                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>*@                   
                 </ul>
             </nav>
         </div>
@@ -47,7 +42,7 @@
 <footer>
     <div class="content-wrapper">
         <div class="float-left">
-            <p>&copy; @DateTime.Now.Year - Contoso University</p>
+            <p>&copy; @DateTime.Now.Year - Никулин Дмитрий</p>
         </div>
     </div>
 </footer>

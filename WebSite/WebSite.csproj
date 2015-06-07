@@ -254,12 +254,10 @@
     </Compile>
     <Compile Include="SignalR\ILiveBookCounterHub.cs" />
     <Compile Include="SignalR\LiveBookCounterHub.cs" />
-    <Compile Include="SignalR\ChatHub.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Models\PromoLoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValuesController1.cs" />
-    <Compile Include="ViewModels\Book.cs" />
+    <Compile Include="ViewModels\BookDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
@@ -344,7 +342,6 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\liveBookCounter.js" />
-    <Content Include="Scripts\util.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

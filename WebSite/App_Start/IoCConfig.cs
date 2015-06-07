@@ -8,8 +8,7 @@
 	using ServiceLayer.IoC;
 
 	using WebSite.BLL;
-	using WebSite.Hubs;
-
+	
 	public class IoCConfig
 	{
 		public static void Register()

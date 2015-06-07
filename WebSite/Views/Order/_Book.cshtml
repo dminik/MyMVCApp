@@ -1,7 +1,7 @@
-﻿@model WebSite.ViewModels.Book
+﻿@model WebSite.ViewModels.BookDto
 
 <li id="@Model.Id" class="book ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
-    <h5 class="ui-widget-header">@Model.Name</h5>
+    <h6 class="ui-widget-header">@Model.Name</h6>
     <img src="~/Images/high_tatras_min.jpg" alt="@Model.Name" width="96" height="72">
     <h6 class="ui-widget-header">@Model.Price руб.</h6>
     <h6 class="ui-widget-header">@Model.Amount шт. было</h6>

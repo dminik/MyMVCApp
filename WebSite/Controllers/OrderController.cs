@@ -1,6 +1,7 @@
 ﻿namespace WebSite.Controllers
 {
 	using System.Collections.Generic;
+	using System.Configuration;
 	using System.Linq;
 	using System.Web.Mvc;
 
@@ -33,15 +34,16 @@
 
 		public ActionResult Index()
 		{
+			decimal maxTotalSum = decimal.Parse(ConfigurationManager.AppSettings["promo:MaxTotalSum"]);
 			var bookList = this.BookService.GetAll().ToList();
 
 			var promoCode = UserIdentity.PromoCode;
 			var ownOrderDetails = OrderService.GetByPromoCode(promoCode).ToList();
 
-			var modelBookList = new List<Book>();
+			var modelBookList = new List<BookDto>();
 			foreach (var bookEntity in bookList)
 			{
-				var dtoBook = new Book(bookEntity);
+				var dtoBook = new BookDto(bookEntity);
 				dtoBook.RestAmount = OrderService.GetRestAmount(dtoBook.Id);
 				dtoBook.IsOrdered = ownOrderDetails.Any(x => x.BookId == dtoBook.Id);
 				modelBookList.Add(dtoBook);

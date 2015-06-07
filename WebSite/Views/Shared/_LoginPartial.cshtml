@@ -1,11 +1,11 @@
 ﻿@if (Request.IsAuthenticated)
 {
     <text>
-        Ваш промокод: @User.Identity.Name
+        <h4>Ваш промокод: @User.Identity.Name</h4>
         @using (Html.BeginForm("LogOff", "PromoAccount", FormMethod.Post, new { id = "logoutForm" }))
         {
             @Html.AntiForgeryToken()
-            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            <a href="javascript:document.getElementById('logoutForm').submit()">Забыть в этом браузере (debug)</a>
         }
     </text>
 } 

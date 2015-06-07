@@ -6,8 +6,7 @@
 
 	using ServiceLayer.Services;
 
-	using WebSite.BLL;
-	using WebSite.Hubs;
+	using WebSite.BLL;	
 
 	public class LiveBookCounterHub : Hub, ILiveBookCounterHub
 	{
