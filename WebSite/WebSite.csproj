@@ -244,6 +244,7 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\IUserIdentity.cs" />
+    <Compile Include="BLL\DebugInfo.cs" />
     <Compile Include="BLL\UserIdentity.cs" />
     <Compile Include="Controllers\PromoAccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -257,6 +258,7 @@
     <Compile Include="Models\PromoLoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValuesController1.cs" />
+    <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\BookDto.cs" />
   </ItemGroup>
   <ItemGroup>

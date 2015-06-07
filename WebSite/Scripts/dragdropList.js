@@ -2,18 +2,20 @@
 
 	var self = this;
 
-	this.Init = function (addBook, deleteBook) {
+	this.Init = function (sendAddBookToServer, sendDeleteBookToServer) {
 
 		// there's the gallery and the trash
 		var $gallery = $("#gallery"),
-		    $trash = $("#trash");
+		    $trash = $("#trash"),
+			maxTotalSum = $("#maxTotalSum").val(),
+		    $totalSum = $("#totalSum");
 
 		var trashIcon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>"; // image preview function, demonstrating the ui.dialog used as a modal window
 		var recycleIcon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>"; // image recycle function
 
 
 
-		this.deleteImage = function ($item) {
+		this.moveBookVisualElementToTrash = function ($item) {
 			$item.fadeOut(function () {
 				var $list = $("ul", $("#trash")).length ?
 					$("ul", $("#trash")) :
@@ -29,7 +31,7 @@
 			});
 		}
 
-		this.recycleImage = function ($item) {
+		this.moveBookVisualElementToGallery = function ($item) {
 			$item.fadeOut(function () {
 				$item
 					.find("a.ui-icon-refresh")
@@ -86,9 +88,20 @@
 			accept: "#gallery > li",
 			activeClass: "ui-state-highlight",
 			drop: function (event, ui) {
-				var bookId = ui.draggable.attr('id');
-				self.deleteImage(ui.draggable);
-				addBook(bookId);
+				var $book = ui.draggable;
+				// Проверяем, что сумма перетаскиваемой книги итоговая сумма не больше максимальной
+				var price = parseFloat($book.find(".book-price-amount").text()).toFixed(2);				
+				var currentTotal = parseFloat($totalSum.text()).toFixed(2);			
+				var newTotal = currentTotal + price;
+
+				if (newTotal > maxTotalSum) {
+					alert("Сумма заказа " + newTotal + " превышает допустимую " + maxTotalSum);
+					return;
+				}
+
+				var bookId = $book.attr('id');
+				self.moveBookVisualElementToTrash($book);
+				sendAddBookToServer(bookId);
 			}
 		});
 
@@ -97,8 +110,8 @@
 			activeClass: "custom-state-active",
 			drop: function (event, ui) {
 				var bookId = ui.draggable.attr('id');
-				self.recycleImage(ui.draggable);
-				deleteBook(bookId);
+				self.moveBookVisualElementToGallery(ui.draggable);
+				sendDeleteBookToServer(bookId);
 			}
 		});
 
@@ -115,11 +128,11 @@
 			    $target = $(event.target);
 
 			if ($target.is("a.ui-icon-trash")) {
-				self.deleteImage($item);
+				self.moveBookVisualElementToTrash($item);
 			} else if ($target.is("a.ui-icon-zoomin")) {
 				self.viewLargerImage($target);
 			} else if ($target.is("a.ui-icon-refresh")) {
-				self.recycleImage($item);
+				self.moveBookVisualElementToGallery($item);
 			}
 
 			return false;

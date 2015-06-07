@@ -3,7 +3,9 @@
 <li id="@Model.Id" class="book ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
     <h6 class="ui-widget-header">@Model.Name</h6>
     <img src="~/Images/high_tatras_min.jpg" alt="@Model.Name" width="96" height="72">
-    <h6 class="ui-widget-header">@Model.Price руб.</h6>
+    <div class="book-price-panel">
+        <span class="book-price-amount">@Model.Price</span><span class="book-price-currency"> руб.</span>
+    </div>
     <h6 class="ui-widget-header">@Model.Amount шт. было</h6>
     <h6 class="ui-widget-header">
         <span class="amount-ordered">@Model.RestAmount</span>

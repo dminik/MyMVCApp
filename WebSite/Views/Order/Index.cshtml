@@ -1,14 +1,17 @@
-﻿@model IEnumerable<WebSite.ViewModels.BookDto>
+﻿@using System.Web.Mvc.Html
+@model WebSite.ViewModels.OrderViewModel
 
 @{
     ViewBag.Title = "Книги по промоакциии";
 }
 
+<input id="maxTotalSum" type="hidden" value="@Model.MaxTotalSum" />
+
 <div class="ui-widget ui-helper-clearfix">
     <h4 class="ui-widget-header"><span class="ui-icon ui-icon-bookmark"></span> Библиотека книг</h4>
     <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix ui-droppable">
         
-        @foreach (var currentBook in Model.Where(x => !x.IsOrdered))
+        @foreach (var currentBook in Model.BookList.Where(x => !x.IsOrdered))
         {
             @Html.Partial("_Book", currentBook)
         }
@@ -17,22 +20,27 @@
     <div id="trash" class="ui-widget-content ui-state-default ui-droppable">
         <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash"></span> Ваша корзина</h4>
         <ul class="gallery ui-helper-reset">
-            @foreach (var currentBook in Model.Where(x => x.IsOrdered))
+            @foreach (var currentBook in Model.BookList.Where(x => x.IsOrdered))
             {
                 @Html.Partial("_Book", currentBook)
             }
         </ul>
-
-
-        <h4>Сумма заказа:</h4><h2 id="totalSum"></h2>
-        <input id="btnFinishOrder" type="button" value="Заказать"/>
-        
     </div>
 
+   
 </div>
 
-
-
+<div id="totalSumPanel">
+    <div>
+        <div >
+            <span>Допустимая сумма заказа: </span><span id="maxTotalSumNumber">@Model.MaxTotalSum.ToString()</span><span class="totalSumCurrency"> руб.</span>
+        </div>
+        <div>
+            <span>Сумма заказа: </span><span id="totalSum">@Model.TotalSum.ToString()</span><span class="totalSumCurrency"> руб.</span>
+        </div>
+    </div>
+    <input id="btnFinishOrder" type="button" value="Заказать"/>
+</div>
 
 
 <h2>Живой счетчик книг</h2>
@@ -40,7 +48,7 @@
     <input id="bookId" type="hidden" value="1" />
 
     Оставшееся количество для Буратино: 
-    <input type="text" id="live-counter" value="@Model.Single(x => x.Id == 1).RestAmount" />
+    <input type="text" id="live-counter" value="@Model.BookList.Single(x => x.Id == 1).RestAmount" />
     <input id="btnAddBook" type="button" value="Добавить"/>
     <input id="btnDeleteBook" type="button" value="Удалить"/>
 </div>

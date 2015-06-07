@@ -32,7 +32,8 @@
 			var books = new List<Book>
 			{
 				new Book { Name = "Буратино", Amount = 5, Price = 1000, Id = 1 },
-				new Book { Name = "Война и мир", Amount = 2, Price = 500, Id = 2 }
+				new Book { Name = "Война и мир", Amount = 3, Price = 500, Id = 2 },
+				new Book { Name = "Я Бетмен", Amount = 5, Price = 700, Id = 3 },
 			};
 
 			return books;

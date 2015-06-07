@@ -49,7 +49,19 @@
 				modelBookList.Add(dtoBook);
 			}
 
-			return this.View(modelBookList);
+			var orderedBookList = modelBookList.Where(x => x.IsOrdered).ToList();
+			decimal totalSum = 0;
+			if(orderedBookList.Any())
+				totalSum = orderedBookList.Sum(x => x.Price);
+
+			var orderViewModel = new OrderViewModel()
+			{
+				BookList = modelBookList,
+				TotalSum = totalSum,
+				MaxTotalSum = maxTotalSum,
+			};
+
+			return this.View(orderViewModel);
 		}
 
 		[HttpPost]

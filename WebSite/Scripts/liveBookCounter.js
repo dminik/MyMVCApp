@@ -4,26 +4,26 @@
 	var hub = $.connection.liveBookCounterHub;
 
 	// Отсылаем на сервер	
-	function addBook(bookId) {
+	function sendAddBookToServer(bookId) {
 		if (bookId) {
 			hub.server.addBook(bookId);			
 		} else
 			alert("bookId is undefined");
 	}
 
-	function addBook1() {
-		addBook(1);
+	function sendAddBookToServer1() {
+		sendAddBookToServer(1);
 	}
 
-	function deleteBook(bookId) {
+	function sendDeleteBookToServer(bookId) {
 		if (bookId)
 			hub.server.deleteBook(bookId);
 		else 
 			alert("bookId is undefined");		
 	}
 
-	function deleteBook1() {
-		deleteBook(1);
+	function sendDeleteBookToServer1() {
+		sendDeleteBookToServer(1);
 	}
 
 
@@ -51,7 +51,7 @@
 	hub.client.addedBook = function (bookId, restAmount, errorMsg) {
 		var $book = $("#" + bookId);
 		if (errorMsg) {
-			dragdropList.recycleImage($book);
+			dragdropList.moveBookVisualElementToGallery($book);
 
 			if (errorMsg === "Ошибочный промокод")
 				document.getElementById('logoutForm').submit();
@@ -73,10 +73,10 @@
 	// Привязка событий контролов	
 	$.connection.hub.start().done(function () {
 
-		$('#btnDeleteBook').click(addBook1);
-		$('#btnAddBook').click(deleteBook1);   
+		$('#btnDeleteBook').click(sendAddBookToServer1);
+		$('#btnAddBook').click(sendDeleteBookToServer1);   
 
-		dragdropList.Init(addBook, deleteBook);
+		dragdropList.Init(sendAddBookToServer, sendDeleteBookToServer);
 		
 
 	});

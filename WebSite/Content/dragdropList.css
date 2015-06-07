@@ -1,58 +1,69 @@
 ﻿
-			#gallery {
-				float: left;
-				width: 65%;
-				min-height: 28em;
-				background: steelblue none repeat scroll 0 0;
-			}
+#gallery {
+	float: left;
+	width: 65%;
+	min-height: 28em;
+	background: steelblue none repeat scroll 0 0;
+}
 
-			.gallery.custom-state-active {
-				background: #eee;
-			}
+.gallery.custom-state-active {
+	background: #eee;
+}
 
-			.gallery li {
-				float: left;
-				width: 96px;
-				padding: 0.4em;
-				margin: 0 0.4em 0.4em 0;
-				text-align: center;
-			}
+.gallery li {
+	float: left;
+	width: 96px;
+	padding: 0.4em;
+	margin: 0 0.4em 0.4em 0;
+	text-align: center;
+}
 
-				.gallery li h5 {
-					margin: 0 0 0.4em;
-					cursor: move;
-				}
+	.gallery li h5 {
+		margin: 0 0 0.4em;
+		cursor: move;
+	}
 
-				.gallery li a {
-					float: right;
-				}
+	.gallery li a {
+		float: right;
+	}
 
-					.gallery li a.ui-icon-zoomin {
-						float: left;
-					}
+		.gallery li a.ui-icon-zoomin {
+			float: left;
+		}
 
-				.gallery li img {
-					width: 100%;
-					cursor: move;
-				}
+	.gallery li img {
+		width: 100%;
+		cursor: move;
+	}
 
-			#trash {
-				float: right;
-				width: 32%;
-				min-height: 20em;
-				padding: 1%;
-			}
+#trash {
+	float: right;
+	width: 32%;
+	min-height: 20em;
+	padding: 1%;
+}
 
-				#trash h4 {
-					line-height: 16px;
-					margin: 0 0 0.4em;
-				}
+	#trash h4 {
+		line-height: 16px;
+		margin: 0 0 0.4em;
+	}
 
-					#trash h4 .ui-icon {
-						float: left;
-					}
+		#trash h4 .ui-icon {
+			float: left;
+		}
 
-				#trash .gallery h5 {
-					display: none;
-				}
-		
+	#trash .gallery h5 {
+		display: none;
+	}
+
+#totalSumPanel {
+	float: right;
+}
+
+#totalSumPanel div {
+    text-align: right;
+}
+
+#btnFinishOrder{
+	float: right;
+}
