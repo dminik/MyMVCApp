@@ -7,7 +7,7 @@
 		// there's the gallery and the trash
 		var $gallery = $("#gallery"),
 		    $trash = $("#trash"),
-			maxTotalSum = $("#maxTotalSum").val(),
+			maxTotalSum = parseFloat($("#maxTotalSum").val()),
 		    $totalSum = $("#totalSum");
 
 		var trashIcon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>"; // image preview function, demonstrating the ui.dialog used as a modal window
@@ -90,10 +90,11 @@
 			drop: function (event, ui) {
 				var $book = ui.draggable;
 				// Проверяем, что сумма перетаскиваемой книги итоговая сумма не больше максимальной
-				var price = parseFloat($book.find(".book-price-amount").text()).toFixed(2);				
-				var currentTotal = parseFloat($totalSum.text()).toFixed(2);			
+				var price = parseFloat($book.find(".book-price-amount").text());				
+				var currentTotal = parseFloat($totalSum.text());			
 				var newTotal = currentTotal + price;
 
+				alert("Сумма заказа " + newTotal);
 				if (newTotal > maxTotalSum) {
 					alert("Сумма заказа " + newTotal + " превышает допустимую " + maxTotalSum);
 					return;
