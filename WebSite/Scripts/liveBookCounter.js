@@ -8,7 +8,7 @@
 		if (bookId) {
 			hub.server.addBook(bookId);			
 		} else
-			alert("bookId is undefined");
+			dragdropList.showAlert("bookId is undefined");
 	}
 
 	function sendAddBookToServer1() {
@@ -19,7 +19,7 @@
 		if (bookId)
 			hub.server.deleteBook(bookId);
 		else 
-			alert("bookId is undefined");		
+			dragdropList.showAlert("bookId is undefined");
 	}
 
 	function sendDeleteBookToServer1() {

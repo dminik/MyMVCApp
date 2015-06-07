@@ -3,17 +3,20 @@
 	var self = this;
 
 	this.Init = function (sendAddBookToServer, sendDeleteBookToServer) {
-
-		// there's the gallery and the trash
+		
 		var $gallery = $("#gallery"),
 		    $trash = $("#trash"),
 			maxTotalSum = parseFloat($("#maxTotalSum").val()),
-		    $totalSum = $("#totalSum");
+		    $totalSum = $("#totalSum"),
+			$alertmsg = $("#alert-msg");
 
 		var trashIcon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>"; // image preview function, demonstrating the ui.dialog used as a modal window
 		var recycleIcon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>"; // image recycle function
 
 
+		this.showAlert = function (msg) {
+			$alertmsg.text(msg).fadeIn("slow").fadeOut(4000);
+		}
 
 		this.moveBookVisualElementToTrash = function ($item) {
 			$item.fadeOut(function () {
@@ -93,10 +96,9 @@
 				var price = parseFloat($book.find(".book-price-amount").text());				
 				var currentTotal = parseFloat($totalSum.text());			
 				var newTotal = currentTotal + price;
-
-				alert("Сумма заказа " + newTotal);
+				
 				if (newTotal > maxTotalSum) {
-					alert("Сумма заказа " + newTotal + " превышает допустимую " + maxTotalSum);
+					self.showAlert("Сумма заказа " + newTotal + " превышает допустимую " + maxTotalSum);
 					return;
 				}
 
@@ -147,7 +149,7 @@
 				if (errorMsg === "Ошибочный промокод")
 					document.getElementById('logoutForm').submit();
 				else
-					alert(errorMsg);
+					self.showAlert(errorMsg);
 			} else {
 				if (bookId == 1)
 					$('#live-counter').val(restAmount);
@@ -161,7 +163,7 @@
 		this.refreshBookAmountForAll = function (bookId, restAmount, errorMsg) {
 			var $book = $("#" + bookId);
 			if (errorMsg) {
-				alert(errorMsg);
+				self.showAlert(errorMsg);
 			} else {
 				if (bookId == 1)
 					$('#live-counter').val(restAmount);

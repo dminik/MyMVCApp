@@ -7,10 +7,11 @@
 
 <input id="maxTotalSum" type="hidden" value="@Model.MaxTotalSum" />
 
+
 <div class="ui-widget ui-helper-clearfix">
     <h4 class="ui-widget-header"><span class="ui-icon ui-icon-bookmark"></span> Библиотека книг</h4>
     <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix ui-droppable">
-        
+
         @foreach (var currentBook in Model.BookList.Where(x => !x.IsOrdered))
         {
             @Html.Partial("_Book", currentBook)
@@ -27,8 +28,11 @@
         </ul>
     </div>
 
-   
+
 </div>
+
+<h4 id="alert-msg"></h4>
+
 
 <div id="totalSumPanel">
     <div>
@@ -62,3 +66,4 @@
     @Scripts.Render("~/bundles/liveBookCounter")
 
 }
+
