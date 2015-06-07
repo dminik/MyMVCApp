@@ -16,7 +16,9 @@ namespace ServiceLayer.Services
 
 		void ChangeStatus(string promoCode, OrderStatus status);
 
-		IEnumerable<OrderDetail> GetByPromoCode(string promoCode);
+		IEnumerable<OrderDetail> GetOrderDetailListByPromoCode(string promoCode);
+
+		decimal GetOrderTotalSumByPromoCode(string promoCode);
 
 		int GetRestAmount(int bookId);
 	}

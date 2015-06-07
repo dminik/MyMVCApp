@@ -44,8 +44,9 @@
 			if(book == null)
 				throw new Exception(string.Format("Ошибочный bookId {0}", bookId));
 
+			// если книги еще есть в наличии
 			if (restAmount > 0)
-			{
+			{				
 				dataRepositories.OrderDetails.Add(order.Id, bookId);
 				UnitOfWork.Save();
 				restAmount--;
@@ -79,7 +80,7 @@
 			UnitOfWork.Save();
 		}
 
-		public IEnumerable<OrderDetail> GetByPromoCode(string promoCode)
+		public IEnumerable<OrderDetail> GetOrderDetailListByPromoCode(string promoCode)
 		{
 			return dataRepositories.OrderDetails.GetByPromoCode(promoCode);
 		}
@@ -91,7 +92,11 @@
 			var restAmount = amount - orderedAmount;
 			return restAmount > 0 ? restAmount : 0;
 		}
-		
+
+		public decimal GetOrderTotalSumByPromoCode(string promoCode)
+		{
+			return dataRepositories.OrderDetails.GetOrderTotalSumByPromoCode(promoCode);
+		}
 		private string GeneratePromoCode()
 		{
 			string promoCode;

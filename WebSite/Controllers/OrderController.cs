@@ -38,7 +38,7 @@
 			var bookList = this.BookService.GetAll().ToList();
 
 			var promoCode = UserIdentity.PromoCode;
-			var ownOrderDetails = OrderService.GetByPromoCode(promoCode).ToList();
+			var ownOrderDetails = OrderService.GetOrderDetailListByPromoCode(promoCode).ToList();
 
 			var modelBookList = new List<BookDto>();
 			foreach (var bookEntity in bookList)
@@ -48,12 +48,9 @@
 				dtoBook.IsOrdered = ownOrderDetails.Any(x => x.BookId == dtoBook.Id);
 				modelBookList.Add(dtoBook);
 			}
-
-			var orderedBookList = modelBookList.Where(x => x.IsOrdered).ToList();
-			decimal totalSum = 0;
-			if(orderedBookList.Any())
-				totalSum = orderedBookList.Sum(x => x.Price);
-
+			
+			var totalSum = OrderService.GetOrderTotalSumByPromoCode(promoCode);
+			
 			var orderViewModel = new OrderViewModel()
 			{
 				BookList = modelBookList,

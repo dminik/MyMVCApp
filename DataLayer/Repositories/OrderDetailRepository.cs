@@ -45,5 +45,10 @@
 		{
 			return FindBy(y => y.BookId == bookId).Count();
 		}
+
+		public decimal GetOrderTotalSumByPromoCode(string promoCode)
+		{
+			return FindBy(y => y.Order.PromoCode == promoCode).Sum(y => y.Book.Price);
+		}
 	}
 }

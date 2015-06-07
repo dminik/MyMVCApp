@@ -24,7 +24,7 @@
 		{
 			string errorMsg = "";
 			int restAmount = 0;
-
+			decimal totalSum = 0;
 			try
 			{
 				var promoCode = User.PromoCode;
@@ -33,6 +33,7 @@
 					throw new Exception("PromoCode неопределен у текущего пользователя.");
 			
 				var isAdded = this.OrdeService.AddBook(promoCode, bookId, out restAmount);
+				totalSum = this.OrdeService.GetOrderTotalSumByPromoCode(promoCode);
 
 				if (!isAdded)				
 				{
@@ -47,13 +48,14 @@
 			if (string.IsNullOrEmpty(errorMsg))
 				this.Clients.Others.OnRefreshBookAmountForAll(bookId, restAmount, "");
 
-			this.Clients.Caller.OnAddBookCompleted(bookId, restAmount, errorMsg);
+			this.Clients.Caller.OnAddBookCompleted(bookId, totalSum, restAmount, errorMsg);
 		}
 
 		public void deleteBook(int bookId)
 		{
 			string errorMsg = "";
 			int restAmount = 0;
+			decimal totalSum = 0;
 
 			try
 			{
@@ -63,6 +65,7 @@
 					throw new Exception("PromoCode неопределен у текущего пользователя.");
 				
 				this.OrdeService.DeleteBook(promoCode, bookId, out restAmount);
+				totalSum = this.OrdeService.GetOrderTotalSumByPromoCode(promoCode);
 			}
 			catch (Exception ex)
 			{
@@ -72,7 +75,7 @@
 			if (string.IsNullOrEmpty(errorMsg))							
 				this.Clients.Others.refreshBookAmountForAll(bookId, restAmount, "");
 
-			this.Clients.Caller.OnDeleteBookCompleted(bookId, restAmount, errorMsg);
+			this.Clients.Caller.OnDeleteBookCompleted(bookId, totalSum, restAmount, errorMsg);
 		}	
 	}
 }
