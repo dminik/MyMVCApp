@@ -72,8 +72,8 @@
 				errorMsg = ex.Message;
 			}
 						
-			if (string.IsNullOrEmpty(errorMsg))							
-				this.Clients.Others.refreshBookAmountForAll(bookId, restAmount, "");
+			if (string.IsNullOrEmpty(errorMsg))
+				this.Clients.Others.OnRefreshBookAmountForAll(bookId, restAmount, "");
 
 			this.Clients.Caller.OnDeleteBookCompleted(bookId, totalSum, restAmount, errorMsg);
 		}	

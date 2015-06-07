@@ -67,5 +67,6 @@
 #alert-msg{
 	float: left;
 	color: red;
+	min-height: 5em;
 }
 

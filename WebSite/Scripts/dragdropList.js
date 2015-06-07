@@ -103,10 +103,13 @@
 			var $bookAmountOrderedElement = $("#" + bookId + " .amount-ordered");
 			$bookAmountOrderedElement.text(restAmount);
 
-			if (restAmount == 0)
-				$book.draggable("disable");
-			else
-				$book.draggable("enable");
+			var isBookInGallery = ($book.parent('#gallery').length == true);
+			if (isBookInGallery) {
+				if (restAmount == 0)
+					$book.draggable("disable");
+				else
+					$book.draggable("enable");
+			}
 		}
 	};
 
