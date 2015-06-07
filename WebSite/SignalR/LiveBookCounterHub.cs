@@ -31,7 +31,6 @@
 
 				if (string.IsNullOrEmpty(promoCode)) 
 					throw new Exception("PromoCode неопределен у текущего пользователя.");
-
 			
 				var isAdded = this.OrdeService.AddBook(promoCode, bookId, out restAmount);
 
@@ -45,10 +44,10 @@
 				errorMsg = ex.Message;
 			}
 
-			if (string.IsNullOrEmpty(errorMsg))							
-				this.Clients.Others.refreshBookAmountForAll(bookId, restAmount, "");			
-			
-			this.Clients.Caller.addedBook(bookId, restAmount, errorMsg);
+			if (string.IsNullOrEmpty(errorMsg))
+				this.Clients.Others.OnRefreshBookAmountForAll(bookId, restAmount, "");
+
+			this.Clients.Caller.OnAddBookCompleted(bookId, restAmount, errorMsg);
 		}
 
 		public void deleteBook(int bookId)
@@ -73,7 +72,7 @@
 			if (string.IsNullOrEmpty(errorMsg))							
 				this.Clients.Others.refreshBookAmountForAll(bookId, restAmount, "");
 
-			this.Clients.Caller.deletedBook(bookId, restAmount, errorMsg);
+			this.Clients.Caller.OnDeleteBookCompleted(bookId, restAmount, errorMsg);
 		}	
 	}
 }

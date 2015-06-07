@@ -26,48 +26,10 @@
 		sendDeleteBookToServer(1);
 	}
 
-
 	// Вызывается сервером уже после добавления книги	
-	hub.client.refreshBookAmountForAll = function (bookId, restAmount, errorMsg) {
-		var $book = $("#" + bookId);
-		if (errorMsg) {			
-				alert(errorMsg);
-		} else {
-			if (bookId == 1)
-				$('#live-counter').val(restAmount);
-
-			//обновляем инфу на книжке
-			var $bookAmountOrderedElement = $("#" + bookId + " .amount-ordered");
-			$bookAmountOrderedElement.text(restAmount);
-
-			if (restAmount == 0)
-				$book.draggable("disable");
-			else
-				$book.draggable("enable");
-		}
-	};
-
-	
-	hub.client.addedBook = function (bookId, restAmount, errorMsg) {
-		var $book = $("#" + bookId);
-		if (errorMsg) {
-			dragdropList.moveBookVisualElementToGallery($book);
-
-			if (errorMsg === "Ошибочный промокод")
-				document.getElementById('logoutForm').submit();
-			else
-				alert(errorMsg);
-		} else {
-			if (bookId == 1)
-				$('#live-counter').val(restAmount);
-
-			//обновляем инфу на книжке
-			var $bookAmountOrderedElement = $("#" + bookId + " .amount-ordered");
-			$bookAmountOrderedElement.text(restAmount);
-		}
-	};
-
-	hub.client.deletedBook = hub.client.addedBook;
+	hub.client.OnRefreshBookAmountForAll = dragdropList.refreshBookAmountForAll;
+	hub.client.OnAddBookCompleted = dragdropList.addBookCompleted;
+	hub.client.OnDeleteBookCompleted = dragdropList.addBookCompleted;
 
 
 	// Привязка событий контролов	
