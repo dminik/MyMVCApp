@@ -15,7 +15,7 @@
 	var sendReopenOrderToServer;
 
 	this.showAlert = function (msg) {
-		$alertmsg.text(msg).fadeIn("slow").fadeOut(10000);
+		$alertmsg.text(msg).fadeIn("slow").fadeOut(6000);
 	}
 
 	var moveBookVisualElementToTrash = function ($item) {
