@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository;
@@ -85,6 +86,12 @@
 			var order = this.orderRepository.GetByPromoCode(promoCode);
 			if (order == null)
 				throw new ProgramException(string.Format("Ошибочный промокод {0}", promoCode));
+
+
+			if (status == OrderStatus.BuiltByUser)
+				if (!GetOrderDetailListByPromoCode(promoCode).Any())
+					throw new ProgramException("Ничего не выбрано");
+
 			order.Status = status;
 			UnitOfWork.Save();
 		}

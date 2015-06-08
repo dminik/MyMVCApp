@@ -4,9 +4,7 @@
 	using System.Configuration;
 	using System.Linq;
 	using System.Web.Mvc;
-
-	using DataLayer.Model.Entities;
-
+	
 	using ServiceLayer;
 	using ServiceLayer.Services;
 
@@ -63,22 +61,6 @@
 			};
 
 			return this.View(orderViewModel);
-		}
-
-		//public ActionResult CommitOrder()
-		//{
-		//	var promoCode = UserIdentity.PromoCode;
-		//	OrderService.ChangeStatus(promoCode, OrderStatus.BuiltByUser);	
-			
-		//	return new EmptyResult();
-		//}
-
-		//public ActionResult ReopenOrder()
-		//{
-		//	var promoCode = UserIdentity.PromoCode;
-		//	OrderService.ChangeStatus(promoCode, OrderStatus.BuildingByUser);
-
-		//	return new EmptyResult();
-		//}	
+		}		
 	}
 }
