@@ -1,8 +1,14 @@
 ﻿namespace WebAPI.Controllers
 {
+	using System;
 	using System.Collections.Generic;
 	using System.IO;
+	using System.Linq;
+	using System.Net;
 	using System.Net.Http;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Web;
 	using System.Web.Http;
 
 	using DataLayer.Model.Entities;
@@ -31,15 +37,13 @@
 			var book = this.BookService.GetById(id);
 			return book;
 		}
-
-		// POST api/book
-		public void Post(Book item)
-		{
-			this.BookService.Update(item);			
-		}
-
+		
 		// PUT api/book/
-		public void Put(Book item)
+		//public void Put(Book item)
+		//{
+		
+		//	this.BookService.Create(item);
+		//}
 
 		public async Task<HttpResponseMessage> Post()
 		{

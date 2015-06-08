@@ -101,7 +101,7 @@ namespace ServiceLayer.UnitTests
 			
 			// Assert 
 			Assert.IsNotNull(results2);
-			Assert.AreEqual(TestDataProvider.GetBooks().Count, results2.Count());
+			
 			this.mockBookRepository.Verify(x => x.GetAll(), Times.Once);			
 			this.mockCacheService.Verify(x => x.GetByGroupKey<Book>(It.IsAny<string>()), Times.Once);
 		}

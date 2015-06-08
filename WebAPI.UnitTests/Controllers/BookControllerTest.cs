@@ -26,54 +26,54 @@
 
 		[Test]
 		public void Get()
-		{			
+		{
 			// Act
 			var result = controller.Get().ToList();
 
 			// Assert
 			Assert.IsNotNull(result);
-			Assert.AreEqual(TestDataProvider.GetBooks().Count, result.Count());			
+			Assert.AreEqual(TestDataProvider.GetBooks().Count, result.Count());
 		}
 
 		[Test]
 		public void GetById()
-		{			
+		{
 			// Act
 			var result = controller.Get(1);
 
 			// Assert			
-			this.mockBookService.Verify(x => x.GetById(It.Is<int>(y=>y == 1)), Times.Once);
+			this.mockBookService.Verify(x => x.GetById(It.Is<int>(y => y == 1)), Times.Once);
 		}
 
-		[Test]
-		public void Post()
-		{
-			// Arrange
-			var itemForEdit = TestDataProvider.GetBooks()[0];
+		//[Test]
+		//public void Post()
+		//{
+		//	// Arrange
+		//	var itemForEdit = TestDataProvider.GetBooks()[0];
 
-			// Act
-			controller.Post(itemForEdit);
+		//	// Act
+		//	controller.Post(itemForEdit);
 
-			// Assert			
-			this.mockBookService.Verify(x => x.Update(It.IsAny<Book>()), Times.Once);
-		}
+		//	// Assert			
+		//	this.mockBookService.Verify(x => x.Update(It.IsAny<Book>()), Times.Once);
+		//}
 
-		[Test]
-		public void Put()
-		{
-			// Arrange
-			var itemForPut = TestDataProvider.GetBooks()[0];
+		//[Test]
+		//public void Put()
+		//{
+		//	// Arrange
+		//	//var itemForPut = TestDataProvider.GetBooks()[0];
 
-			// Act
-			controller.Put(itemForPut);
+		//	//// Act
+		//	//controller.Put(itemForPut);
 
-			// Assert			
-			this.mockBookService.Verify(x => x.Create(It.IsAny<Book>()), Times.Once);
-		}
+		//	//// Assert			
+		//	//this.mockBookService.Verify(x => x.Create(It.IsAny<Book>()), Times.Once);
+		//}
 
 		[Test]
 		public void Delete()
-		{			
+		{
 			// Act
 			controller.Delete(5);
 
