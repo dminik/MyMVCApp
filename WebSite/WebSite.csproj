@@ -332,6 +332,7 @@
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -397,6 +398,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{401E8A46-B0CE-421A-A0AB-F289DD436FF1}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataLayer.Context\DataLayer.Context.csproj">
       <Project>{57974fc9-6ee7-4df8-939a-62f84c9da13d}</Project>
       <Name>DataLayer.Context</Name>

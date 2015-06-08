@@ -70,3 +70,11 @@
 	min-height: 5em;
 }
 
+#order-status{
+	float: right;
+	color: red;
+	min-height: 5em;
+	display: none;
+}
+
+

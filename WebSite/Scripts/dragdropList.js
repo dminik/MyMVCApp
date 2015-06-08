@@ -4,12 +4,19 @@
 	var $gallery = $("#gallery"),
 		$trash = $("#trash"),
 		$totalSum = $("#totalSum"),
-		$alertmsg = $("#alert-msg");
+		$alertmsg = $("#alert-msg"),
+		$isOrderStatusBuilding = $("#is-order-status-building");
 
 	var maxTotalSum = parseFloat($("#maxTotalSum").val());
 	
 	var sendAddBookToServer;
 	var sendDeleteBookToServer;
+	var sendCommitOrderToServer;
+	var sendReopenOrderToServer;
+
+	this.showAlert = function (msg) {
+		$alertmsg.text(msg).fadeIn("slow").fadeOut(10000);
+	}
 
 	var moveBookVisualElementToTrash = function ($item) {
 		$item.fadeOut(function () {
@@ -64,24 +71,16 @@
 		moveBookVisualElementToTrash($book);
 		sendAddBookToServer(bookId);
 	}
-
-	this.showAlert = function (msg) {
-		$alertmsg.text(msg).fadeIn("slow").fadeOut(10000);
-	}
-
-	this.addBookCompleted = function (bookId, totalSum, restAmount, errorMsg) {
-		var $book = $("#" + bookId);
-		if (errorMsg) {
-			moveBookVisualElementToGallery($book);
-
+	
+	var addDelBookCompleted = function (bookId, totalSum, restAmount, errorMsg) {		
+		if (errorMsg) {			
 			if (errorMsg === "Ошибочный промокод")
 				document.getElementById('logoutForm').submit();
 			else
 				self.showAlert(errorMsg);
-		} else {
-			if (bookId == 1)
-				$('#live-counter').val(restAmount);
-
+		}
+		else {
+			
 			//обновляем инфу на книжке
 			var $bookAmountOrderedElement = $("#" + bookId + " .amount-ordered");
 			$bookAmountOrderedElement.text(restAmount);
@@ -91,14 +90,77 @@
 		}
 	};
 
+	var lockOrder = function () {
+		$isOrderStatusBuilding.val("false");
+		$("#btnFinishOrder").hide();
+		$("#btnReopenOrder").show();
+		$("#order-status").show();
+		//$.blockUI();
+		self.showAlert("Заказ сделан");
+	}
+
+	var unlockOrder = function () {
+		$isOrderStatusBuilding.val("true");
+		$("#btnFinishOrder").show();
+		$("#btnReopenOrder").hide();
+		$("#order-status-label").hide();
+		//$.unblockUI();
+		self.showAlert("Заказ открыт");
+	}
+
+	if ($isOrderStatusBuilding.val() == "true") {
+		unlockOrder();
+	} else {
+		lockOrder();
+	}
+
+
+	this.commitOrderCompleted = function (errorMsg) {
+		if (errorMsg) {
+			if (errorMsg === "Ошибочный промокод")
+				document.getElementById('logoutForm').submit();
+			else
+				self.showAlert(errorMsg);
+		}
+		else {
+			lockOrder();
+		}
+	}
+
+	this.reopenOrderCompleted = function (errorMsg) {
+		if (errorMsg) {
+			if (errorMsg === "Ошибочный промокод")
+				document.getElementById('logoutForm').submit();
+			else
+				self.showAlert(errorMsg);
+		}
+		else {
+			unlockOrder();
+		}
+	}
+
+	this.addBookCompleted = function(bookId, totalSum, restAmount, errorMsg) {
+		var $book = $("#" + bookId);
+		if (errorMsg) {
+			moveBookVisualElementToGallery($book);
+		}
+		addDelBookCompleted(bookId, totalSum, restAmount, errorMsg);
+	}
+
+	this.deleteBookCompleted = function (bookId, totalSum, restAmount, errorMsg) {
+		var $book = $("#" + bookId);
+		if (errorMsg) {
+			moveBookVisualElementToTrash($book);
+		}
+		addDelBookCompleted(bookId, totalSum, restAmount, errorMsg);
+	}
+	
 	this.refreshBookAmountForAll = function (bookId, restAmount, errorMsg) {
 		var $book = $("#" + bookId);
 		if (errorMsg) {
 			self.showAlert(errorMsg);
-		} else {
-			if (bookId == 1)
-				$('#live-counter').val(restAmount);
-
+		}
+		else {
 			//обновляем инфу на книжке
 			var $bookAmountOrderedElement = $("#" + bookId + " .amount-ordered");
 			$bookAmountOrderedElement.text(restAmount);
@@ -113,11 +175,14 @@
 		}
 	};
 
-	this.Init = function (pSendAddBookToServer, pSendDeleteBookToServer) {
+	this.Init = function (pSendAddBookToServer, pSendDeleteBookToServer, pSendCommitOrderToServer, pSendReopenOrderToServer) {
 
 		sendAddBookToServer = pSendAddBookToServer;
 		sendDeleteBookToServer = pSendDeleteBookToServer;
+		sendCommitOrderToServer = pSendCommitOrderToServer;
+		sendReopenOrderToServer = pSendReopenOrderToServer;
 
+		
 		// let the gallery items be draggable
 		$("li", $gallery).draggable({
 			cancel: "a.ui-icon", // clicking an icon won't initiate dragging
@@ -171,6 +236,38 @@
 			}
 
 			return false;
-		});		
+		});
+
+		
+
+		$('#btnFinishOrder').click(function () {
+			sendCommitOrderToServer();
+			//$.ajax({
+			//	url: "/Order/CommitOrder",				
+			//	type: "POST",
+			//	async: true,
+			//	success: lockOrder,
+			//	error: function(xhr, ajaxOptions, thrownError) {
+			//		self.showAlert(xhr.status);
+			//		self.showAlert(thrownError);
+			//	}
+			//});
+		});
+
+		$('#btnReopenOrder').click(function () {
+			sendReopenOrderToServer();
+			//$.ajax({
+			//	url: "/Order/ReopenOrder",				
+			//	type: "POST",
+			//	async: true,
+			//	success: unlockOrder,
+			//	error: function (xhr, ajaxOptions, thrownError) {
+			//		self.showAlert(xhr.status);
+			//		self.showAlert(thrownError);
+			//	}
+			//});
+
+
+		});
 	}
 }

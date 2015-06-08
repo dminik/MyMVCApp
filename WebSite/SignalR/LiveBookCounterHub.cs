@@ -2,6 +2,10 @@
 {
 	using System;
 
+	using Common;
+
+	using DataLayer.Model.Entities;
+
 	using Microsoft.AspNet.SignalR;
 
 	using ServiceLayer.Services;
@@ -10,15 +14,14 @@
 
 	public class LiveBookCounterHub : Hub, ILiveBookCounterHub
 	{
-		protected IOrderService OrdeService;
+		protected IOrderService OrderService;
 		protected IUserIdentity User;
 
 		public LiveBookCounterHub(IOrderService ordeService, IUserIdentity user)
 		{
-			this.OrdeService = ordeService;
+			this.OrderService = ordeService;
 			this.User = user;
 		}
-
 		
 		public void addBook(int bookId)
 		{
@@ -30,14 +33,14 @@
 				var promoCode = User.PromoCode;
 
 				if (string.IsNullOrEmpty(promoCode)) 
-					throw new Exception("PromoCode неопределен у текущего пользователя.");
+					throw new ProgramException("PromoCode неопределен у текущего пользователя.");
 			
-				var isAdded = this.OrdeService.AddBook(promoCode, bookId, out restAmount);
-				totalSum = this.OrdeService.GetOrderTotalSumByPromoCode(promoCode);
+				var isAdded = this.OrderService.AddBook(promoCode, bookId, out restAmount);
+				totalSum = this.OrderService.GetOrderTotalSumByPromoCode(promoCode);
 
 				if (!isAdded)				
 				{
-					throw new Exception("Книга не добавилась, так как кончились экземпляры.");
+					throw new ProgramException("Книга не добавилась, так как кончились экземпляры.");
 				}			
 			}
 			catch (Exception ex)
@@ -62,10 +65,10 @@
 				var promoCode = User.PromoCode;
 
 				if (string.IsNullOrEmpty(promoCode))
-					throw new Exception("PromoCode неопределен у текущего пользователя.");
+					throw new ProgramException("PromoCode неопределен у текущего пользователя.");
 				
-				this.OrdeService.DeleteBook(promoCode, bookId, out restAmount);
-				totalSum = this.OrdeService.GetOrderTotalSumByPromoCode(promoCode);
+				this.OrderService.DeleteBook(promoCode, bookId, out restAmount);
+				totalSum = this.OrderService.GetOrderTotalSumByPromoCode(promoCode);
 			}
 			catch (Exception ex)
 			{
@@ -76,6 +79,42 @@
 				this.Clients.Others.OnRefreshBookAmountForAll(bookId, restAmount, "");
 
 			this.Clients.Caller.OnDeleteBookCompleted(bookId, totalSum, restAmount, errorMsg);
-		}	
+		}
+
+		
+		public void reopenOrder()
+		{
+			var errorMsg = ChangeOrderStatus(OrderStatus.BuildingByUser);
+			this.Clients.Caller.OnReopenOrderCompleted(errorMsg);
+		}
+
+		public void commitOrder()
+		{
+			var errorMsg = ChangeOrderStatus(OrderStatus.BuiltByUser);
+			this.Clients.Caller.OnCommitOrderCompleted(errorMsg);
+		}
+
+		private string ChangeOrderStatus(OrderStatus orderStatus)
+		{
+			string errorMsg = "";
+			int restAmount = 0;
+			decimal totalSum = 0;
+
+			try
+			{
+				var promoCode = User.PromoCode;
+
+				if (string.IsNullOrEmpty(promoCode))
+					throw new ProgramException("PromoCode неопределен у текущего пользователя.");
+
+				OrderService.ChangeStatus(promoCode, orderStatus);
+			}
+			catch (Exception ex)
+			{
+				errorMsg = ex.Message;
+			}
+
+			return errorMsg;
+		}
 	}
 }

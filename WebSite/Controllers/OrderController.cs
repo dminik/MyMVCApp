@@ -5,6 +5,8 @@
 	using System.Linq;
 	using System.Web.Mvc;
 
+	using DataLayer.Model.Entities;
+
 	using ServiceLayer;
 	using ServiceLayer.Services;
 
@@ -50,41 +52,33 @@
 			}
 			
 			var totalSum = OrderService.GetOrderTotalSumByPromoCode(promoCode);
+			var order = OrderService.GetByPromoCode(promoCode);
 			
 			var orderViewModel = new OrderViewModel()
 			{
 				BookList = modelBookList,
 				TotalSum = totalSum,
 				MaxTotalSum = maxTotalSum,
+				OrderStatus = order.Status,
 			};
 
 			return this.View(orderViewModel);
 		}
 
-		[HttpPost]
-		public ActionResult AddToOrder(string promoCode, int bookId)
-		{
-			//var order = unitOfWork.OrderRepository.Get(x => x.PromoCode == promoCode).FirstOrDefault();
+		//public ActionResult CommitOrder()
+		//{
+		//	var promoCode = UserIdentity.PromoCode;
+		//	OrderService.ChangeStatus(promoCode, OrderStatus.BuiltByUser);	
+			
+		//	return new EmptyResult();
+		//}
 
-			//if (order == null)
-			//	throw new Exception("Неправильный промокод " + promoCode);
+		//public ActionResult ReopenOrder()
+		//{
+		//	var promoCode = UserIdentity.PromoCode;
+		//	OrderService.ChangeStatus(promoCode, OrderStatus.BuildingByUser);
 
-			//var orderDetail = new OrderDetail();
-
-			//order.OrderDetails.Add(orderDetail);
-
-			//unitOfWork.Save();
-
-			return this.Json(true);
-		}
-
-		[HttpPost]
-		public ActionResult DeleteFromOrder(string promoCode, int bookId)
-		{
-			//unitOfWork.OrderDetailRepository.RemoveOrderDetail(promoCode, bookId);
-			//unitOfWork.Save();
-
-			return this.Json(true);
-		}
+		//	return new EmptyResult();
+		//}	
 	}
 }

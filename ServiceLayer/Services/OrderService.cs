@@ -5,7 +5,10 @@
 
 	using DataLayer.Model.Entities;
 	using DataLayer.Repository;
-	using DataLayer.Repository.Repositories;	
+	using DataLayer.Repository.Repositories;
+
+	using global::Common;
+
 	using ServiceLayer.Common;
 
 	public class OrderService : EntityService<Order, int>, IOrderService		
@@ -37,12 +40,15 @@
 
 			var order = this.orderRepository.GetByPromoCode(promoCode);
 			if (order == null)
-				throw new Exception("Ошибочный промокод");
+				throw new ProgramException("Ошибочный промокод");
+
+			if (order.Status != OrderStatus.BuildingByUser)
+				throw new ProgramException("Невозможно для заказа с выполененным статусом");
 
 			restAmount = GetRestAmount(bookId);
 			var book = dataRepositories.Books.GetByKey(bookId);
 			if(book == null)
-				throw new Exception(string.Format("Ошибочный bookId {0}", bookId));
+				throw new ProgramException(string.Format("Ошибочный bookId {0}", bookId));
 
 			// если книги еще есть в наличии
 			if (restAmount > 0)
@@ -64,7 +70,10 @@
 		{			
 			var order = this.orderRepository.GetByPromoCode(promoCode);
 			if (order == null)
-				throw new Exception(string.Format("Ошибочный промокод {0}", promoCode));
+				throw new ProgramException(string.Format("Ошибочный промокод {0}", promoCode));
+
+			if (order.Status != OrderStatus.BuildingByUser)
+				throw new ProgramException("Невозможно для заказа с выполененным статусом");
 
 			dataRepositories.OrderDetails.Delete(order.Id, bookId);
 			UnitOfWork.Save();
@@ -75,7 +84,7 @@
 		{
 			var order = this.orderRepository.GetByPromoCode(promoCode);
 			if (order == null)
-				throw new Exception(string.Format("Ошибочный промокод {0}", promoCode));
+				throw new ProgramException(string.Format("Ошибочный промокод {0}", promoCode));
 			order.Status = status;
 			UnitOfWork.Save();
 		}
@@ -91,6 +100,11 @@
 			var orderedAmount = dataRepositories.OrderDetails.GetRestAmount(bookId);
 			var restAmount = amount - orderedAmount;
 			return restAmount > 0 ? restAmount : 0;
+		}
+
+		public Order GetByPromoCode(string promoCode)
+		{
+			return dataRepositories.Orders.GetByPromoCode(promoCode);
 		}
 
 		public decimal GetOrderTotalSumByPromoCode(string promoCode)

@@ -70,6 +70,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{401E8A46-B0CE-421A-A0AB-F289DD436FF1}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataLayer.Model\DataLayer.Model.csproj">
       <Project>{91362d3d-e30f-4294-9726-e3bcabe49cf9}</Project>
       <Name>DataLayer.Model</Name>

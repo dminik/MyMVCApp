@@ -21,5 +21,7 @@ namespace ServiceLayer.Services
 		decimal GetOrderTotalSumByPromoCode(string promoCode);
 
 		int GetRestAmount(int bookId);
+
+		Order GetByPromoCode(string promoCode);
 	}
 }

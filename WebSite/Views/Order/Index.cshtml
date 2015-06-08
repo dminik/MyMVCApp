@@ -1,69 +1,81 @@
 ﻿@using System.Web.Mvc.Html
+@using DataLayer.Model.Entities
+@using WebSite.BLL
 @model WebSite.ViewModels.OrderViewModel
 
 @{
     ViewBag.Title = "Книги по промоакциии";
+    string isOrderBuilding = Model.OrderStatus == OrderStatus.BuildingByUser ? "true" : "false";
 }
 
-<input id="maxTotalSum" type="hidden" value="@Model.MaxTotalSum" />
+<div id="promo-container">
+    <input id="maxTotalSum" type="hidden" value="@Model.MaxTotalSum"/>
+    <input id="maxTotalSum2" type="hidden" value="yyy" />
+    <input id="is-order-status-building" type="hidden" value="@isOrderBuilding" />
+   
+    <div class="ui-widget ui-helper-clearfix">
+        <h4 class="ui-widget-header"><span class="ui-icon ui-icon-bookmark"></span> Библиотека книг</h4>
+        <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix ui-droppable">
 
-
-<div class="ui-widget ui-helper-clearfix">
-    <h4 class="ui-widget-header"><span class="ui-icon ui-icon-bookmark"></span> Библиотека книг</h4>
-    <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix ui-droppable">
-
-        @foreach (var currentBook in Model.BookList.Where(x => !x.IsOrdered))
-        {
-            @Html.Partial("_Book", currentBook)
-        }
-    </ul>
-
-    <div id="trash" class="ui-widget-content ui-state-default ui-droppable">
-        <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash"></span> Ваша корзина</h4>
-        <ul class="gallery ui-helper-reset">
-            @foreach (var currentBook in Model.BookList.Where(x => x.IsOrdered))
+            @foreach (var currentBook in Model.BookList.Where(x => !x.IsOrdered))
             {
                 @Html.Partial("_Book", currentBook)
             }
         </ul>
+
+        <div id="trash" class="ui-widget-content ui-state-default ui-droppable">
+            <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash"></span> Ваша корзина</h4>
+            <ul class="gallery ui-helper-reset">
+                @foreach (var currentBook in Model.BookList.Where(x => x.IsOrdered))
+                {
+                    @Html.Partial("_Book", currentBook)
+                }
+            </ul>
+        </div>
+
+
     </div>
 
-
-</div>
-
-<h4 id="alert-msg"></h4>
+    <div id="alert-msg"></div>
 
 
-<div id="totalSumPanel">
-    <div>
-        <div >
-            <span>Допустимая сумма заказа: </span><span id="maxTotalSumNumber">@Model.MaxTotalSum.ToString()</span><span class="totalSumCurrency"> руб.</span>
-        </div>
+    <div id="totalSumPanel">
         <div>
-            <span>Сумма заказа: </span><span id="totalSum">@Model.TotalSum.ToString()</span><span class="totalSumCurrency"> руб.</span>
+            <div>
+                <span>Допустимая сумма заказа: </span><span id="maxTotalSumNumber">@Model.MaxTotalSum.ToString()</span><span class="totalSumCurrency"> руб.</span>
+            </div>
+            <div>
+                <span>Сумма заказа: </span><span id="totalSum">@Model.TotalSum.ToString()</span><span class="totalSumCurrency"> руб.</span>
+            </div>
         </div>
+
+        <input id="btnFinishOrder" type="button" value="Заказать" />
+
+        @if (DebugInfo.IsDebug)
+        {
+            <input id="btnReopenOrder" type="button" value="Отменить заказ (debug) "/>
+        }
+        
+        <div id="order-status-label">Заказ сделан</div>
+
     </div>
-    <input id="btnFinishOrder" type="button" value="Заказать"/>
 </div>
-
-
-<h2>Живой счетчик книг</h2>
-<div class="live-counter-container">
-    <input id="bookId" type="hidden" value="1" />
-
-    Оставшееся количество для Буратино: 
-    <input type="text" id="live-counter" value="@Model.BookList.Single(x => x.Id == 1).RestAmount" />
-    <input id="btnAddBook" type="button" value="Добавить"/>
-    <input id="btnDeleteBook" type="button" value="Удалить"/>
-</div>
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
+    <script src="~/Scripts/jquery.blockUI.js"></script>
     @Scripts.Render("~/bundles/signalR")
     @Scripts.Render("~/bundles/dragdropList")
-    <script src="~/signalr/hubs"></script>    
+    <script src="~/signalr/hubs"></script>
     @Scripts.Render("~/bundles/liveBookCounter")
 
-}
 
+
+    <script>
+        var setBlockUI = function () { $.blockUI ("Загрузка...")}
+
+        $(document).ready(function() {
+            $(document).ajaxStart(setBlockUI).ajaxStop($.unblockUI);
+        });
+    </script>
+}

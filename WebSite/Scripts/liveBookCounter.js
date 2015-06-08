@@ -10,11 +10,7 @@
 		} else
 			dragdropList.showAlert("bookId is undefined");
 	}
-
-	function sendAddBookToServer1() {
-		sendAddBookToServer(1);
-	}
-
+	
 	function sendDeleteBookToServer(bookId) {
 		if (bookId)
 			hub.server.deleteBook(bookId);
@@ -22,24 +18,25 @@
 			dragdropList.showAlert("bookId is undefined");
 	}
 
-	function sendDeleteBookToServer1() {
-		sendDeleteBookToServer(1);
+	function sendCommitOrderToServer() {		
+			hub.server.commitOrder();		
+	}
+
+	function sendReopenOrderToServer() {
+		hub.server.reopenOrder();
 	}
 
 	// Вызывается сервером уже после добавления книги	
 	hub.client.OnRefreshBookAmountForAll = dragdropList.refreshBookAmountForAll;
 	hub.client.OnAddBookCompleted = dragdropList.addBookCompleted;
-	hub.client.OnDeleteBookCompleted = dragdropList.addBookCompleted;
+	hub.client.OnDeleteBookCompleted = dragdropList.deleteBookCompleted;
+
+	hub.client.OnCommitOrderCompleted = dragdropList.commitOrderCompleted;
+	hub.client.OnReopenOrderCompleted = dragdropList.reopenOrderCompleted;
 
 
 	// Привязка событий контролов	
 	$.connection.hub.start().done(function () {
-
-		$('#btnDeleteBook').click(sendAddBookToServer1);
-		$('#btnAddBook').click(sendDeleteBookToServer1);   
-
-		dragdropList.Init(sendAddBookToServer, sendDeleteBookToServer);
-		
-
+		dragdropList.Init(sendAddBookToServer, sendDeleteBookToServer, sendCommitOrderToServer, sendReopenOrderToServer);
 	});
 });
