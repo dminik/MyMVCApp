@@ -2,7 +2,12 @@
 
 <li id="@Model.Id" class="book ui-widget-content ui-corner-tr ui-draggable ui-draggable-handle">
     <h6 class="ui-widget-header">@Model.Name</h6>
-    <img src="~/Images/high_tatras_min.jpg" alt="@Model.Name" width="96" height="72">
+
+    @if (!string.IsNullOrEmpty(@Model.FilePath))
+    {
+        <img src="@Model.FilePath" alt="@Model.Name" width="96" height="72">
+    }
+
     <div class="book-price-panel">
         <span class="book-price-amount">@Model.Price</span><span class="book-price-currency"> руб.</span>
     </div>
@@ -10,6 +15,5 @@
     <h6 class="ui-widget-header">
         <span class="amount-ordered">@Model.RestAmount</span>
         шт. осталось
-    </h6>
-    <a href="http://jqueryui.com/resources/demos/droppable/images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+    </h6>    
 </li>

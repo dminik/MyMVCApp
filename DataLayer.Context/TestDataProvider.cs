@@ -31,9 +31,9 @@
 		{
 			var books = new List<Book>
 			{
-				new Book { Name = "Буратино", Amount = 3, Price = 1000, Id = 1 },
-				new Book { Name = "Война и мир", Amount = 1, Price = 500, Id = 2 },
-				new Book { Name = "Я Бетмен", Amount = 2, Price = 700, Id = 3 },
+				new Book { Name = "Буратино", Amount = 3, Price = 1000, Id = 1, FilePath = "b15144e5-8b7d-4e2e-8476-0aa333f9d76b_book1.png", },
+				new Book { Name = "Война и мир", Amount = 1, Price = 500, Id = 2, FilePath = "b15144e5-8b7d-4e2e-8476-0aa333f9d76b_book2.png", },
+				new Book { Name = "Я Бетмен", Amount = 2, Price = 700, Id = 3, FilePath = "b15144e5-8b7d-4e2e-8476-0aa333f9d76b_book3.png", },
 			};
 
 			return books;

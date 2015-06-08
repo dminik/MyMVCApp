@@ -40,19 +40,52 @@
 
 		// PUT api/book/
 		public void Put(Book item)
+
+		public async Task<HttpResponseMessage> Post()
 		{
-			//var request = System.Web.HttpContext.Current.Request.F
-			//if()
-			//{
-			//	if (!Infile(Request.Files[Save])) continue;
-			//	string fileType = Request.Files[Save].ContentType;
-			//	Stream file_Strm = Request.Files[Save].InputStream;
-			//	string file_Name = Path.GetFileName(Request.Files[Save].FileName);
-			//	int fileSize = Request.Files[Save].ContentLength;
-			//	byte[] fileRcrd = new byte[fileSize];
+			var item = new Book();
 
 
-			this.BookService.Create(item);
+			// Check if the request contains multipart/form-data.
+			if (!Request.Content.IsMimeMultipartContent())
+			{
+				throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+			}
+
+			string root = HttpContext.Current.Server.MapPath("~/Images/Books");
+			var provider = new MultipartFormDataStreamProvider(root);
+
+			try
+			{								
+				await Request.Content.ReadAsMultipartAsync(provider);
+
+				item.Name = provider.FormData["Name"];
+				item.Price = decimal.Parse(provider.FormData["Price"]);
+				item.Amount = int.Parse(provider.FormData["Amount"]);
+
+				if (provider.FileData.Any())
+				{
+					var fileData = provider.FileData.First();
+					var finfo = new FileInfo(fileData.LocalFileName);
+
+					string guid = Guid.NewGuid().ToString();
+
+					item.FilePath = guid + "_" + fileData.Headers.ContentDisposition.FileName.Replace("\"", "");
+					var absolutFilePath = Path.Combine(root, item.FilePath);
+					File.Move(finfo.FullName, absolutFilePath);
+				}
+
+				this.BookService.Create(item);
+
+				return new HttpResponseMessage()
+				{
+					Content = new StringContent("Сохранен файл обложки: " + item.FilePath)
+				};
+			}
+			catch (System.Exception e)
+			{
+				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+			}
 		}
 
 		// DELETE api/book/5

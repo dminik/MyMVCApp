@@ -46,8 +46,7 @@
 			return this.View(model);
 		}
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
+		
 		public ActionResult LogOff()
 		{
 			WebSecurity.Logout();

@@ -11,6 +11,6 @@
 
 		public int Amount { get; set; }
 
-		public int FilePath { get; set; }
+		public string FilePath { get; set; }
 	}
 }

@@ -2,10 +2,13 @@
 {
 	using System.Collections.Generic;
 	using System.Configuration;
+	using System.IO;
 	using System.Linq;
 	using System.Net.Http;
 	using System.Web.Mvc;
-	
+
+	using Common;
+
 	using ServiceLayer;
 	using ServiceLayer.Services;
 
@@ -35,11 +38,18 @@
 
 		public ActionResult Index()
 		{
+			var promoCode = UserIdentity.PromoCode;
+
+			var order = OrderService.GetByPromoCode(promoCode);
+
+			if (order == null)
+				return this.RedirectToAction("LogOff", "PromoAccount"); 
+
 			decimal maxTotalSum = decimal.Parse(ConfigurationManager.AppSettings["promo:MaxTotalSum"]);
 			var bookList = this.BookService.GetAll().ToList();
-
-			var promoCode = UserIdentity.PromoCode;
+			
 			var ownOrderDetails = OrderService.GetOrderDetailListByPromoCode(promoCode).ToList();
+			string rootForImages = "http://localhost:82/Images/Books"; // todo перенести в web.config
 
 			var modelBookList = new List<BookDto>();
 			foreach (var bookEntity in bookList)
@@ -47,18 +57,19 @@
 				var dtoBook = new BookDto(bookEntity);
 				dtoBook.RestAmount = OrderService.GetRestAmount(dtoBook.Id);
 				dtoBook.IsOrdered = ownOrderDetails.Any(x => x.BookId == dtoBook.Id);
+				if (!string.IsNullOrEmpty(dtoBook.FilePath))
+					dtoBook.FilePath = Path.Combine(rootForImages, dtoBook.FilePath);
 				modelBookList.Add(dtoBook);
 			}
 			
 			var totalSum = OrderService.GetOrderTotalSumByPromoCode(promoCode);
-			var order = OrderService.GetByPromoCode(promoCode);
 			
 			var orderViewModel = new OrderViewModel()
 			{
 				BookList = modelBookList,
 				TotalSum = totalSum,
 				MaxTotalSum = maxTotalSum,
-				OrderStatus = order.Status,
+				OrderStatus = order.Status,				
 			};
 
 			return this.View(orderViewModel);
