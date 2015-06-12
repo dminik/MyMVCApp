@@ -5,7 +5,9 @@
 	using System.Linq;
 	using System.Runtime.Caching;
 	using System.Threading.Tasks;
-	
+	using System.Web;
+	using System.Web.Helpers;
+
 	/// <summary>
 	/// A cached collection of key value pairs. This can be used to cache objects internally on the server.
 	/// </summary>
@@ -35,6 +37,28 @@
 		#endregion
 
 		#region Public Properties
+
+		public T GetCached<T>(string key, Func<T> getter, string @group) 
+			where T : class
+		{
+			var localCache = HttpRuntime.Cache;
+			var result = (T)localCache.Get(key);
+
+			if (result == null)
+			{
+				result = this.Get<T>(key, group);
+
+				if (result == null)
+				{
+					result = getter();
+					this.AddOrUpdate(key, result, group);
+					localCache.Insert(key, result);
+				}
+			}
+
+			return result;
+		}
+
 
 		/// <summary>
 		/// Gets the total number of cache entries in the cache.

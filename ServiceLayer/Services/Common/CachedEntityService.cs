@@ -31,7 +31,7 @@
 			}
 			
 			base.Create(entity);
-			CacheService.AddOrUpdate(entity.Id.ToString(), entity, this.ObjectKeyPrefix);
+			//CacheService.AddOrUpdate(entity.Id.ToString(), entity, this.ObjectKeyPrefix);
 		}
 
 		public override void Update(T entity)
@@ -42,48 +42,52 @@
 			}
 			
 			base.Update(entity);
-			CacheService.AddOrUpdate(entity.Id.ToString(), entity, this.ObjectKeyPrefix);
+			//CacheService.AddOrUpdate(entity.Id.ToString(), entity, this.ObjectKeyPrefix);
 		}
 
 		public override void Delete(TKeyType id)
 		{			
-			CacheService.Remove(id.ToString(), this.ObjectKeyPrefix);
+			//CacheService.Remove(id.ToString(), this.ObjectKeyPrefix);
 			base.Delete(id);
 		}
 
 		public override IEnumerable<T> GetAll()
-		{			
-			var isGetAllOccuredCacheKey = "IsGetAllOccuredCacheKey";
-			var isCacheContainAll = CacheService.Get<object>(isGetAllOccuredCacheKey, FlagKeyPrefix) != null;
+		{
+			IEnumerable<T> result;
 
-			if (!isCacheContainAll)
+			//var isGetAllOccuredCacheKey = "IsGetAllOccuredCacheKey";
+			//var isCacheContainAll = CacheService.Get<object>(isGetAllOccuredCacheKey, FlagKeyPrefix) != null;
+
+			if (true)//!isCacheContainAll)
 			{
 				var all = this.Repository.GetAll();
 				foreach (var item in all)
 				{
-					CacheService.AddOrUpdate(item.Id.ToString(), item, this.ObjectKeyPrefix);
+					//CacheService.GetCached(item.Id.ToString(), item, this.ObjectKeyPrefix);
 				}
 
-				CacheService.AddOrUpdate(isGetAllOccuredCacheKey, new object(), FlagKeyPrefix);
-				return all.ToList();
+				//CacheService.AddOrUpdate(isGetAllOccuredCacheKey, new object(), FlagKeyPrefix);
+				result = all.ToList();
 			}
 			else
 			{
-				return CacheService.GetByGroupKey<T>(this.ObjectKeyPrefix);
+				//result = CacheService.GetByGroupKey<T>(this.ObjectKeyPrefix);
 			}
+
+			return result;
 		}
 
 		public override T GetById(TKeyType id)
 		{
-			var item = CacheService.Get<T>(id.ToString(), ObjectKeyPrefix);
+			//var item = CacheService.Get<T>(id.ToString(), ObjectKeyPrefix);
 
-			if (item == null)
-			{
-				item = this.Repository.GetByKey(id);
-				CacheService.AddOrUpdate(id.ToString(), item, this.ObjectKeyPrefix);
-			}
+			//if (item == null)
+			//{
+			//	item = this.Repository.GetByKey(id);
+			//	CacheService.AddOrUpdate(id.ToString(), item, this.ObjectKeyPrefix);
+			//}
 
-			return item;
+			return this.Repository.GetByKey(id); //item;
 		}		
 	}
 }

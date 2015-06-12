@@ -13,7 +13,8 @@
 
     <section class="main-content clear-fix">
 
-        <form name="form1" method="post" enctype="multipart/form-data" action="/api/book">
+        @*<form name="form1" method="post" enctype="multipart/form-data" action="/api/book">*@
+        <form name="form1" method="post" action="/api/book">
             <fieldset>
                 <legend>File Upload Example</legend>
 
@@ -25,7 +26,7 @@
 
                 <div>
                     <label for="Price">Цена</label>
-                    <input name="Price" type="text" value="777"/>
+                    <input name="Price" type="text" value="777" />
                 </div>
 
                 <div>
@@ -35,13 +36,13 @@
 
                 <div>
                     <label for="image1">Обложка</label>
-                    <input name="image1" type="file"/>
+                    @*<input name="image1" type="file" />*@
                 </div>
 
 
 
                 <div>
-                    <input type="submit" value="Submit"/>
+                    <input type="submit" value="Submit" />
                 </div>
 
             </fieldset>

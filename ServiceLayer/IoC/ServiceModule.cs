@@ -21,7 +21,8 @@
 				.AsImplementedInterfaces()
 				.InstancePerLifetimeScope();
 
-			builder.RegisterType(typeof(CacheServiceInMemory)).As(typeof(ICacheService)).SingleInstance();
+			// builder.RegisterType(typeof(CacheServiceInMemory)).As(typeof(ICacheService)).SingleInstance();
+			builder.RegisterType(typeof(CacheServiceRedis)).As(typeof(ICacheService)).SingleInstance();
 		}
 	}
 }

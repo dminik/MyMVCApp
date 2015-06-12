@@ -70,3 +70,4 @@ packages/
 ContosoUniversity/App_Data/CU10_log.ldf
 ContosoUniversity/App_Data/CU10.mdf
 */App_Data/*
+WebAPI/Images/Books/*
